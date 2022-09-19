@@ -34,7 +34,6 @@ class afterLoginActivity : AppCompatActivity() {
         binding = ActivityAfterLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val fragment2 = Fragment2()
         val fragment1 = Fragment1()
         val fragment3 = Fragment3()
@@ -42,10 +41,7 @@ class afterLoginActivity : AppCompatActivity() {
         setFragment(fragment1)
 
 
-        val email = intent.getStringExtra("email")
-        Toast.makeText(this,email,Toast.LENGTH_SHORT).show()
-        val intent=Intent(this,MakeRoom::class.java)
-        intent.putExtra("email",email.toString())
+
 
         binding.frag1Btn.setOnClickListener {
             setFragment(fragment1)

@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
                             val flag = application as FlagClass
                             flag.setEmail(email)
+                            flag.setRoomNum(3)
 
                             //접속된 방 없을 경우
                             if(db_roomNum.toString().toInt()==-1) {

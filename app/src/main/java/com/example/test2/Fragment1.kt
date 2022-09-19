@@ -50,9 +50,9 @@ class Fragment1 : Fragment()  {
                         override fun onItemClick(position: Int) {
 
                             val roomNum=roomLis[position].roomNum
-                            Toast.makeText(activity,roomNum.toString(),Toast.LENGTH_SHORT).show()
 
-                            val roomNumFlag = activity.application
+                            val flag= activity?.application as FlagClass
+                            flag.setRoomNum(roomNum)
 
                             val intent=Intent(activity,EnterRoomActivity::class.java)
                             startActivity(intent)

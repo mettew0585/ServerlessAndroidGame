@@ -3,21 +3,33 @@ package com.example.test2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.test2.databinding.ActivityEnterRoomBinding
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class EnterRoomActivity : AppCompatActivity() {
 
+    private lateinit var binding : ActivityEnterRoomBinding
+
+    private lateinit var db : DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_enter_room2)
+        setContentView(R.layout.activity_enter_room)
 
-        val roomNumFlag = RoomNumFlag()
-        val roomNum=roomNumFlag.getRoomNum()
+        val flag=application as FlagClass
+        val roomNum=flag.getRoomNum()
 
-        Toast.makeText(this,roomNum.toString(),Toast.LENGTH_SHORT).show()
+        binding= ActivityEnterRoomBinding.inflate(layoutInflater)
 
 
+        db=FirebaseDatabase.getInstance().getReference("Rooms")
+        db.child(roomNum.toString()).child("title").get().addOnSuccessListener {
+           Toast.makeText(this,it.value.toString(),Toast.LENGTH_SHORT).show()
 
+            binding.tvRoomTitle.text=it.value.toString()
+
+        }
 
     }
 }
