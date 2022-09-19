@@ -1,11 +1,11 @@
 package com.example.test2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.test2.databinding.ActivityEnterRoomBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+
 
 class EnterRoomActivity : AppCompatActivity() {
 
@@ -25,7 +25,7 @@ class EnterRoomActivity : AppCompatActivity() {
 
         db=FirebaseDatabase.getInstance().getReference("Rooms")
         db.child(roomNum.toString()).child("title").get().addOnSuccessListener {
-           Toast.makeText(this,it.value.toString(),Toast.LENGTH_SHORT).show()
+
 
             binding.tvRoomTitle.text=it.value.toString()
 

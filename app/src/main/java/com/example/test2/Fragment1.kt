@@ -1,17 +1,20 @@
 package com.example.test2
 
-import android.content.Intent
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_signup.*
-import kotlinx.android.synthetic.main.after_login_frag1.*
 
 class Fragment1 : Fragment()  {
 
@@ -50,12 +53,50 @@ class Fragment1 : Fragment()  {
                         override fun onItemClick(position: Int) {
 
                             val roomNum=roomLis[position].roomNum
-
                             val flag= activity?.application as FlagClass
                             flag.setRoomNum(roomNum)
 
-                            val intent=Intent(activity,EnterRoomActivity::class.java)
-                            startActivity(intent)
+                            val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(activity)
+                            val input = EditText(activity)
+                            input.setHint("비밀번호")
+                            input.inputType =
+                                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+                            val dialog=builder.setView(input)
+                            .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                // Here you get get input text from the Edittext
+                                var m_Text = input.text.toString()
+
+                                roomdb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
+                                    val players=it.value.toString().toInt()
+                                    if(players==0){
+                                        Toast.makeText(activity,"존재하지 않는 방입니다!",Toast.LENGTH_SHORT).show()
+                                    }else{
+                                        roomdb.child(roomNum.toString()).child("password").get().addOnSuccessListener {
+
+                                         if(m_Text==it.value.toString()){
+
+                                         }else{
+
+
+                                         }
+
+
+
+                                        }
+
+                                    }
+                                }
+
+                            }).create()
+
+                            dialog.setOnShowListener(DialogInterface.OnShowListener {
+                                val button=dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                                button.setTextColor(Color.BLACK)
+                            })
+
+                            dialog.show()
+
                         }
                     })
 
