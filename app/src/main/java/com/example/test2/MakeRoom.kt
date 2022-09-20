@@ -1,16 +1,14 @@
 package com.example.test2
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.test2.databinding.ActivityMakeRoomBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_signup.*
 
 class MakeRoom : AppCompatActivity() {
 
@@ -45,14 +43,21 @@ class MakeRoom : AppCompatActivity() {
 
                     fdb.getReference("Users").child(email.toString()).child("roomNum").setValue(num)
                     fdb.getReference("Rooms").child(num).setValue(room)
-                    fdb.getReference("Rooms").child(num).child("emails").push()
+                    fdb.getReference("Rooms").child(num).child("emails").child(email.toString())
                         .setValue(email.toString())
 
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
+                    //
+                    val chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+                    chatDb.child(num.toString()).push().setValue(Chat("방이 열렸습니다","관리자","관리자",-1))
+
+
+                    //
 
 
                     val intent = Intent(this,ChatRoomActivity::class.java)
                     startActivity(intent)
+
                     finish()
                 }
 

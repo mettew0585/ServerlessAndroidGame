@@ -1,33 +1,33 @@
 package com.example.test2
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.test2.databinding.ActivityAfterLoginBinding
-import com.example.test2.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_after_login.*
-import kotlinx.android.synthetic.main.activity_signup.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
 
 class afterLoginActivity : AppCompatActivity() {
     private lateinit var db: DatabaseReference
     private lateinit var roomdb: DatabaseReference
     private lateinit var binding: ActivityAfterLoginBinding
 
+    var activity: Activity? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_after_login)
+
+
 
         val flag= application as FlagClass
         val email=flag.getEmail()

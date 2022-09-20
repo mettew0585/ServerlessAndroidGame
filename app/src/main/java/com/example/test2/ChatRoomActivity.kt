@@ -2,6 +2,7 @@ package com.example.test2
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,8 @@ class ChatRoomActivity : AppCompatActivity(){
     private lateinit var messageAdapter: ChatRecyclerAdapter
     private lateinit var chatRecyclerView: RecyclerView
     private lateinit var chatDb: DatabaseReference
+    private lateinit var roomDb:DatabaseReference
+    private lateinit var userDb:DatabaseReference
     private lateinit var messageList: ArrayList<Chat>
     private lateinit var binding: ActivityChatRoomBinding
 
@@ -34,6 +37,12 @@ class ChatRoomActivity : AppCompatActivity(){
         val flag = application as FlagClass
         val roomNum = flag.getRoomNum()
         email = flag.getEmail().toString()
+
+        roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
+        roomDb.child(roomNum.toString()).child("title").get().addOnSuccessListener {
+            binding.tvRoomTitle.setText(it.value.toString())
+        }
+
 
         chatDb = FirebaseDatabase.getInstance().getReference("Chat")
         chatRecyclerView=findViewById(R.id.chat_recycler)
@@ -64,6 +73,37 @@ class ChatRoomActivity : AppCompatActivity(){
         )
 
 
+        //
+
+        binding.btnExit.setOnClickListener{
+            //user처리
+            userDb=FirebaseDatabase.getInstance().getReference("Users")
+            userDb.child(email.toString()).child("roomNum").setValue(-1)
+            //room처리
+            roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
+            roomDb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
+                FirebaseDatabase.getInstance().getReference("Rooms").child(roomNum.toString()).child("players")
+                    .setValue(it.value.toString().toInt()-1)
+            }
+            //room처리
+            roomDb.child(roomNum.toString()).child("emails").child(email.toString()).removeValue()
+            ///퇴장 메시지
+            chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+
+
+            userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
+                chatDb.child(roomNum.toString()).push().setValue(Chat("${it.value.toString()}님이 퇴장하였습니다",
+                    "관리자",
+                    "관리자",
+                    -1
+                ))
+            }
+
+            val intent=Intent(this,afterLoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
 
 
@@ -79,6 +119,8 @@ class ChatRoomActivity : AppCompatActivity(){
             val message: String = binding.etMessage.text.toString()
             val flag = application as FlagClass
             val email = flag.getEmail()
+            binding.etMessage.setText("")
+
 
             if (message.isNotEmpty()) {
 

@@ -87,7 +87,7 @@ class Fragment1 : Fragment()  {
                                                 val roomdb2=FirebaseDatabase.getInstance().getReference("Rooms")
 
                                                 roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
-                                                roomdb2.child(roomNum.toString()).child("emails").push().setValue(email)
+                                                roomdb2.child(roomNum.toString()).child("emails").child("email").setValue(email)
 
                                             }
 

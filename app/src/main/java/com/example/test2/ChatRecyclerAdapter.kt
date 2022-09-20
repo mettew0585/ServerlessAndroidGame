@@ -50,6 +50,7 @@ class ChatRecyclerAdapter(
 
             val viewHolder=holder as ReceiveViewHolder
             viewHolder.receiveMessage.text=currentMessage.chat
+            viewHolder.receiveName.text=currentMessage.senderName
         }
 
     }
