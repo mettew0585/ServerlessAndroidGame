@@ -45,9 +45,9 @@ class MakeRoom : AppCompatActivity() {
                     fdb.getReference("Rooms").child(num).setValue(room)
                     fdb.getReference("Rooms").child(num).child("emails").
                     child(flag.getEmail().toString()).setValue(true)
-
-
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
+
+                    fdb.getReference("Chat").child(num.toString()).child("chatCount").setValue(0)
 
                     val intent = Intent(this,ChatRoomActivity::class.java)
                     startActivity(intent)

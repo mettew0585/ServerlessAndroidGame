@@ -2,6 +2,7 @@ package com.example.test2
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
@@ -15,6 +16,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_signup.*
 
 class Fragment1 : Fragment()  {
 
@@ -55,7 +58,6 @@ class Fragment1 : Fragment()  {
                             val roomNum=roomLis[position].roomNum
                             val flag= activity?.application as FlagClass
                             flag.setRoomNum(roomNum)
-
                             val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(activity)
                             val input = EditText(activity)
                             input.setHint("비밀번호")
@@ -72,13 +74,29 @@ class Fragment1 : Fragment()  {
                                     if(players==0){
                                         Toast.makeText(activity,"존재하지 않는 방입니다!",Toast.LENGTH_SHORT).show()
                                     }else{
+
                                         roomdb.child(roomNum.toString()).child("password").get().addOnSuccessListener {
 
-                                         if(m_Text==it.value.toString()){
+                                        if(m_Text==it.value.toString()){
 
+
+                                            val roomdb1=FirebaseDatabase.getInstance().getReference("Rooms")
+                                            roomdb1.child(roomNum.toString()).child("players").get().addOnSuccessListener {
+                                                val p=it.value.toString().toInt()
+                                                val roomdb2=FirebaseDatabase.getInstance().getReference("Rooms")
+                                                roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
+                                            }
+                                            val flag = activity?.application as FlagClass
+                                            val email= flag.getEmail()
+
+                                            val userdb=FirebaseDatabase.getInstance().getReference("Users")
+                                            userdb.child(email.toString()).child("roomNum").setValue(roomNum)
+
+
+                                            val intent= Intent(activity,ChatRoomActivity::class.java)
+                                             startActivity(intent)
                                          }else{
-
-
+                                             Toast.makeText(activity,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
                                          }
 
 

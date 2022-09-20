@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_after_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class afterLoginActivity : AppCompatActivity() {
-    private lateinit var database: DatabaseReference
+    private lateinit var db: DatabaseReference
     private lateinit var roomdb: DatabaseReference
     private lateinit var binding: ActivityAfterLoginBinding
 
@@ -28,6 +28,14 @@ class afterLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_after_login)
+
+        val flag= application as FlagClass
+        val email=flag.getEmail()
+        db=FirebaseDatabase.getInstance().getReference("Users")
+        db.child(email.toString()).child("userName").get().addOnSuccessListener {
+            Toast.makeText(this,"'${it.value.toString()}'님 환영합니다!",Toast.LENGTH_SHORT).show()
+        }
+
 
 
 

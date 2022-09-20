@@ -45,28 +45,26 @@ class MainActivity : AppCompatActivity() {
                 database.child(email).get().addOnSuccessListener {
                     if (it.exists()) {
                         val db_password = it.child("passWord").value
-                        val db_roomNum=it.child("roomNum").value
+                        val db_roomNum = it.child("roomNum").value.toString().toInt()
                         if (db_password == password) {
                             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
 
                             val flag = application as FlagClass
                             flag.setEmail(email)
-                            flag.setRoomNum(3)
+                            flag.setRoomNum(db_roomNum)
 
                             //접속된 방 없을 경우
-                            if(db_roomNum.toString().toInt()==-1) {
+                            if(db_roomNum==-1) {
                                 val intent=Intent(this,afterLoginActivity::class.java)
-                                intent.putExtra("email",email)
-
-
                                 startActivity(intent)
                                 finish()
                             }
                             //접속된 방 잇을경우
                             else {
-
-
+                                val intent = Intent(this,ChatRoomActivity::class.java)
+                                startActivity(intent)
+                                finish()
                             }
                         } else {
                             Toast.makeText(this, "비밀번호가 맞지 않습니다", Toast.LENGTH_SHORT).show()
