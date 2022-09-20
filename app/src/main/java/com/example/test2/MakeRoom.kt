@@ -39,15 +39,17 @@ class MakeRoom : AppCompatActivity() {
                     val num=it.value.toString()
                     val flag=application as FlagClass
                     val email=flag.getEmail()
+                    flag.setRoomNum(num.toInt())
 
                     val room = Room(num.toInt(),1,title,password,email)
 
+                    fdb.getReference("Users").child(email.toString()).child("roomNum").setValue(num)
                     fdb.getReference("Rooms").child(num).setValue(room)
-                    fdb.getReference("Rooms").child(num).child("emails").
-                    child(flag.getEmail().toString()).setValue(true)
+                    fdb.getReference("Rooms").child(num).child("emails").push()
+                        .setValue(email.toString())
+
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
 
-                    fdb.getReference("Chat").child(num.toString()).child("chatCount").setValue(0)
 
                     val intent = Intent(this,ChatRoomActivity::class.java)
                     startActivity(intent)

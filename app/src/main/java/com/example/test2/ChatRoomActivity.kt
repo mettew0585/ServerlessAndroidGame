@@ -1,56 +1,60 @@
 package com.example.test2
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test2.databinding.ActivityChatRoomBinding
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
 
-class ChatRoomActivity : AppCompatActivity() {
+class ChatRoomActivity : AppCompatActivity(){
 
-    private lateinit var adapter: ChatRecyclerAdapter
-    private lateinit var chatRecyclerView : RecyclerView
-    private lateinit var chatArrayList : ArrayList<Chat>
-    private lateinit var chatDb : DatabaseReference
-    private lateinit var binding : ActivityChatRoomBinding
+    private lateinit var messageAdapter: ChatRecyclerAdapter
+    private lateinit var chatRecyclerView: RecyclerView
+    private lateinit var chatDb: DatabaseReference
+    private lateinit var messageList: ArrayList<Chat>
+    private lateinit var binding: ActivityChatRoomBinding
+
+    var email: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_room)
 
+
+        binding = ActivityChatRoomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
         val flag = application as FlagClass
-        val roomNum=flag.getRoomNum()
-        val layoutManager=LinearLayoutManager(this)
-        chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+        val roomNum = flag.getRoomNum()
+        email = flag.getEmail().toString()
 
+        chatDb = FirebaseDatabase.getInstance().getReference("Chat")
+        chatRecyclerView=findViewById(R.id.chat_recycler)
 
+        messageList=ArrayList()
+        messageAdapter= ChatRecyclerAdapter(email.toString(),this@ChatRoomActivity,messageList)
 
-        chatDb.child(roomNum.toString()).child("contents").addValueEventListener(object : ValueEventListener {
+        chatRecyclerView.layoutManager=LinearLayoutManager(this)
+        chatRecyclerView.adapter=messageAdapter
+//
+
+        chatDb.child(roomNum.toString()).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                if(snapshot.exists()){
 
-                    val chatList =ArrayList<Chat>()
-                    for( chatSnapshot in snapshot.children){
-                        val chat=chatSnapshot.getValue(Chat::class.java)
-
-                        if(chat!=null){
-                            chatList.add(chat)
-                        }
+                    messageList.clear()
+                    for( chatSnapshot in snapshot.children) {
+                        val chat = chatSnapshot.getValue(Chat::class.java)
+                        messageList.add(chat!!)
                     }
-
-                    chatRecyclerView=findViewById(R.id.chat_recycler)
-                    chatRecyclerView.setHasFixedSize(true)
-                    adapter= ChatRecyclerAdapter(chatList)
-                    chatRecyclerView.adapter=adapter
-
-                    var adapter=ChatRecyclerAdapter(chatList)
-
-                }
+                messageAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -58,41 +62,49 @@ class ChatRoomActivity : AppCompatActivity() {
             }
         }
         )
-        /*
-        binding.btnSend.setOnClickListener{
-            val message : String = binding.etMessage.text.toString()
+
+
+
+
+
+
+
+
+
+
+
+//
+
+        binding.btnSend.setOnClickListener {
+            val message: String = binding.etMessage.text.toString()
             val flag = application as FlagClass
             val email = flag.getEmail()
 
-            if(message.isNotEmpty()){
+            if (message.isNotEmpty()) {
 
-                val userDb=FirebaseDatabase.getInstance().getReference("Users")
+                val userDb = FirebaseDatabase.getInstance().getReference("Users")
 
                 userDb.child(email.toString()).get().addOnSuccessListener {
 
-                    if(it.exists()){
-                        val userName = it.child("password").value.toString()
-                        val charNum= it.child("character").value.toString().toInt()
+                    val userName = it.child("userName").value.toString()
+                    val charNum = it.child("character").value.toString().toInt()
 
-                        val chat = Chat(message,userName,email,charNum)
+                    val chat = Chat(message, userName, email, charNum)
 
-                        chatDb=FirebaseDatabase.getInstance().getReference("Chat")
-                        chatDb.child(roomNum.toString()).get().addOnSuccessListener { snapshot->
-                            if(snapshot.exists()){
-                                val chatCount = snapshot.child("chatCount").value.toString().toInt()
+                    chatDb = FirebaseDatabase.getInstance().getReference("Chat")
 
-                                val chatDb1=FirebaseDatabase.getInstance().getReference("Chat")
+                    chatDb.child(roomNum.toString()).push().setValue(chat)
 
-                                chatDb1.child("chatCount").setValue(chatCount+1)
-                                chatDb.child(roomNum.toString()).child("contents").child((chatCount+1).toString())
-                                    .setValue(chat)
-                            }
-                        }
-                    }
                 }
             }
         }
-*/
+
+
+
+
+
+
     }
 
 }
+

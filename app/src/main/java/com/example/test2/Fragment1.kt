@@ -78,16 +78,18 @@ class Fragment1 : Fragment()  {
                                         roomdb.child(roomNum.toString()).child("password").get().addOnSuccessListener {
 
                                         if(m_Text==it.value.toString()){
-
-
+                                            val flag = activity?.application as FlagClass
+                                            val email= flag.getEmail()
                                             val roomdb1=FirebaseDatabase.getInstance().getReference("Rooms")
+
                                             roomdb1.child(roomNum.toString()).child("players").get().addOnSuccessListener {
                                                 val p=it.value.toString().toInt()
                                                 val roomdb2=FirebaseDatabase.getInstance().getReference("Rooms")
+
                                                 roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
+                                                roomdb2.child(roomNum.toString()).child("emails").push().setValue(email)
+
                                             }
-                                            val flag = activity?.application as FlagClass
-                                            val email= flag.getEmail()
 
                                             val userdb=FirebaseDatabase.getInstance().getReference("Users")
                                             userdb.child(email.toString()).child("roomNum").setValue(roomNum)

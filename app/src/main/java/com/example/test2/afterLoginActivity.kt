@@ -31,6 +31,7 @@ class afterLoginActivity : AppCompatActivity() {
 
         val flag= application as FlagClass
         val email=flag.getEmail()
+
         db=FirebaseDatabase.getInstance().getReference("Users")
         db.child(email.toString()).child("userName").get().addOnSuccessListener {
             Toast.makeText(this,"'${it.value.toString()}'님 환영합니다!",Toast.LENGTH_SHORT).show()

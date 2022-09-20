@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_signup.*
 
 class Fragment2 : Fragment() {
 
@@ -37,13 +38,14 @@ class Fragment2 : Fragment() {
         val changeBtn=view.findViewById<Button>(R.id.change_btn)
         val tv_coin=view.findViewById<TextView>(R.id.tv_coin)
 
-        val email=arguments?.getString("email")
+        val flag = activity?.application as FlagClass
+        val email=flag.getEmail()
 
 
         database=FirebaseDatabase.getInstance().getReference("Users")
 
 
-        val usernname=database.child(email.toString()).get().addOnSuccessListener {
+        database.child(email.toString()).get().addOnSuccessListener {
             tv_username.setText(it.child("userName").value.toString())
             tv_level.setText("LV.${it.child("level").value.toString()}")
             pgBar.max=exp_level[it.child("level").value.toString().toInt()]
