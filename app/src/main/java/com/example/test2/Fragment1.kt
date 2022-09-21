@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class Fragment1 : Fragment()  {
@@ -85,9 +84,19 @@ class Fragment1 : Fragment()  {
                                             roomdb1.child(roomNum.toString()).child("players").get().addOnSuccessListener {
                                                 val p=it.value.toString().toInt()
                                                 val roomdb2=FirebaseDatabase.getInstance().getReference("Rooms")
+                                                val chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+                                                val userDb=FirebaseDatabase.getInstance().getReference("Users")
 
                                                 roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
                                                 roomdb2.child(roomNum.toString()).child("emails").child("email").setValue(email)
+
+                                                //
+                                                userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
+
+                                                    chatDb.child(roomNum.toString()).push().setValue(
+                                                        Chat("${it.value.toString()}님이 입장하였습니다","관리자","관리자",-1)
+                                                    )
+                                                }
 
                                             }
 
@@ -95,8 +104,11 @@ class Fragment1 : Fragment()  {
                                             userdb.child(email.toString()).child("roomNum").setValue(roomNum)
 
 
-                                            val intent= Intent(activity,ChatRoomActivity::class.java)
-                                             startActivity(intent)
+                                            val intent = Intent(activity, ChatRoomActivity::class.java)
+                                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            startActivity(intent)
+
+
                                          }else{
                                              Toast.makeText(activity,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show()
                                          }

@@ -20,13 +20,11 @@ class afterLoginActivity : AppCompatActivity() {
     private lateinit var roomdb: DatabaseReference
     private lateinit var binding: ActivityAfterLoginBinding
 
-    var activity: Activity? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_after_login)
-
 
 
         val flag= application as FlagClass
