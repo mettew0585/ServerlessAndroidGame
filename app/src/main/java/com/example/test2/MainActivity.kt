@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
                         val db_password = it.child("passWord").value
                         val db_roomNum = it.child("roomNum").value.toString().toInt()
                         if (db_password == password) {
-                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
 
 
                             val flag = application as FlagClass

@@ -49,9 +49,12 @@ class MakeRoom : AppCompatActivity() {
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
                     //
                     val chatDb=FirebaseDatabase.getInstance().getReference("Chat")
-                    chatDb.child(num.toString()).push().setValue(Chat("방이 열렸습니다","관리자","관리자",-1))
+                    val userDb=FirebaseDatabase.getInstance().getReference("Users")
+                    userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
 
-
+                        chatDb.child(num.toString()).child("contents").push().setValue(Chat("방이 열렸습니다! \n방장 :${it.value.toString()}","관리자","관리자",-1))
+                        chatDb.child(num.toString()).child("onGoing").setValue(true)
+                    }
                     //
 
 

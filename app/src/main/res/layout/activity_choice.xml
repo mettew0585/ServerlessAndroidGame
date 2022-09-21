@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background"
+    android:background="@drawable/space_bg"
     tools:context=".ChoiceActivity">
 
     <androidx.gridlayout.widget.GridLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         app:columnCount="2"
         app:rowCount="5">
 
         <LinearLayout
             android:id="@+id/char1"
             android:layout_width="150sp"
-            android:layout_marginLeft="30sp"
             android:layout_marginTop="20sp"
             android:background="@drawable/choicecard"
             android:orientation="vertical"
@@ -155,7 +155,6 @@
         <LinearLayout
             android:id="@+id/char3"
             android:layout_width="150sp"
-            android:layout_marginLeft="30sp"
             android:layout_marginTop="30sp"
             android:background="@drawable/choicecard"
 
@@ -242,6 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+
                 android:textStyle="bold" />
 
             <ImageView
@@ -283,7 +283,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   이름 : 뼈다귀"
+                android:text="   이름 : 암살자"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -291,7 +291,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   특징 : 뼈밖에 안남음"
+                android:text="   특징 : 몰래 죽인다"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -302,7 +302,6 @@
         <LinearLayout
             android:id="@+id/char5"
             android:layout_width="150sp"
-            android:layout_marginLeft="30sp"
 
             android:layout_marginTop="30sp"
             android:background="@drawable/choicecard"
@@ -351,14 +350,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
-                    android:text="300"
+                    android:text="1000000000000"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="   이름 : 멍멍이"
+                android:text="   이름 : 하쿠미짱"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />

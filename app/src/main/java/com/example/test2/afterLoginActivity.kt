@@ -3,14 +3,17 @@ package com.example.test2
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.test2.databinding.ActivityAfterLoginBinding
+import com.google.firebase.FirebaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -52,13 +55,17 @@ class afterLoginActivity : AppCompatActivity() {
 
         binding.frag1Btn.setOnClickListener {
             setFragment(fragment1)
-            binding.frag1Btn.setTextColor(Color.BLACK)
-            binding.frag2Btn.setTextColor(Color.parseColor("#868B8E"))
-            binding.frag3Btn.setTextColor(Color.parseColor("#868B8E"))
 
-            binding.frag1Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-            binding.frag2Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
-            binding.frag3Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+
+            binding.frag1Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()
+                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()))
+            binding.frag2Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()
+                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+            binding.frag3Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt(),
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
 
 
             binding.plusBtn.visibility = View.VISIBLE
@@ -67,13 +74,19 @@ class afterLoginActivity : AppCompatActivity() {
 
         binding.frag2Btn.setOnClickListener {
 
-            binding.frag2Btn.setTextColor(Color.BLACK)
-            binding.frag1Btn.setTextColor(Color.parseColor("#868B8E"))
-            binding.frag3Btn.setTextColor(Color.parseColor("#868B8E"))
+            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
 
-            binding.frag2Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-            binding.frag1Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
-            binding.frag3Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
+
+            binding.frag2Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()
+                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()))
+            binding.frag1Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()
+                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+            binding.frag3Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt(),
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+
+
 
             val email = intent.getStringExtra("email")
             binding.plusBtn.visibility = View.INVISIBLE
@@ -82,14 +95,17 @@ class afterLoginActivity : AppCompatActivity() {
 
         binding.frag3Btn.setOnClickListener {
 
-            binding.frag3Btn.setTextColor(Color.BLACK)
-            binding.frag1Btn.setTextColor(Color.parseColor("#868B8E"))
-            binding.frag2Btn.setTextColor(Color.parseColor("#868B8E"))
+            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
 
+            binding.frag3Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()
+                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()))
+            binding.frag1Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()
+                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+            binding.frag2Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt(),
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
 
-            binding.frag3Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15F)
-            binding.frag1Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
-            binding.frag2Btn.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
 
             setFragment(fragment3)
         }
@@ -97,8 +113,8 @@ class afterLoginActivity : AppCompatActivity() {
 
 
         binding.plusBtn.setOnClickListener {
-            val intent = Intent(this, MakeRoom::class.java)
 
+            val intent = Intent(this, MakeRoom::class.java)
             startActivity(intent)
         }
 

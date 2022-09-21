@@ -4,21 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background"
+    android:background="@drawable/space_bg"
     android:orientation="vertical"
     tools:context=".ChatRoomActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60sp"
-        android:background="@color/white"
+        android:background="@drawable/top_bar"
         android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_exit"
-            android:layout_width="60sp"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_back" />
 
         <TextView
             android:id="@+id/tv_room_title"
@@ -26,7 +20,8 @@
 
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginLeft="30sp"
+            android:layout_marginLeft="10sp"
+            android:fontFamily="@font/nanum"
             android:text="20sp"
             android:textColor="@color/black"
             android:textSize="25sp" />
@@ -45,25 +40,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="100"
-        android:background="#FFF"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:background="#FFF"
+        android:orientation="horizontal"
+        android:padding="10sp"
+        android:weightSum="100">
 
         <EditText
             android:id="@+id/et_message"
-            android:layout_width="439dp"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5sp"
             android:layout_weight="85"
+            android:background="@drawable/chat_input"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10sp" />
 
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageButton
             android:id="@+id/btn_send"
-            android:layout_width="50sp"
+            android:layout_width="40sp"
             android:layout_height="40sp"
-            android:background="@drawable/send_btn" />
+            android:background="@drawable/send_btn"
+            android:backgroundTint="#868B8E"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:tintMode="src_atop" />
 
     </LinearLayout>
 

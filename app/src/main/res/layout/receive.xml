@@ -20,8 +20,11 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:fontFamily="@font/nanum"
         android:paddingLeft="5dp"
-        android:text="Name" />
+        android:text="Name"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/tv_receive_message"
@@ -30,9 +33,11 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:background="@drawable/chat_item"
+        android:fontFamily="@font/nanum"
         android:padding="10dp"
         android:text="this is sent message"
-        android:textSize="18sp" />
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 </LinearLayout>
 
 

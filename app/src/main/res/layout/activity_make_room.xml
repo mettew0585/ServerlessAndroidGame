@@ -4,54 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/white"
+    android:background="@drawable/space_bg"
     android:orientation="vertical"
     tools:context=".MakeRoom">
 
 
     <LinearLayout
-        android:id="@+id/submit_area"
-        android:layout_width="200sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="298dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/submit_area"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="방제목"
-            android:inputType="textPersonName" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/mypage_card"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            android:padding="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/tv_password"
-            android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:ems="10"
+                android:fontFamily="@font/nanum"
+                android:hint="방제목"
+                android:inputType="textPersonName"
+                android:padding="10sp"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/tv_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:background="@drawable/edittext"
+                android:ems="10"
+                android:fontFamily="@font/nanum"
+                android:hint="비밀번호"
+                android:inputType="textPassword"
+                android:padding="10sp"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/makeBtn"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="비밀번호"
-            android:inputType="textPersonName" />
-
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_design"
+            android:fontFamily="@font/nanum"
+            android:text="확인"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent
+    "
+            app:layout_constraintTop_toBottomOf="@+id/submit_area" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/makeBtn"
-        app:layout_constraintStart_toStartOf="parent
-"
-        android:layout_width="100sp"
-        android:layout_height="50sp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="4dp"
-        android:backgroundTint="@color/white"
-        android:text="확인"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/submit_area" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

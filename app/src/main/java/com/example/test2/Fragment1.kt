@@ -93,7 +93,7 @@ class Fragment1 : Fragment()  {
                                                 //
                                                 userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
 
-                                                    chatDb.child(roomNum.toString()).push().setValue(
+                                                    chatDb.child(roomNum.toString()).child("contents").push().setValue(
                                                         Chat("${it.value.toString()}님이 입장하였습니다","관리자","관리자",-1)
                                                     )
                                                 }

@@ -1,16 +1,26 @@
 package com.example.test2
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test2.databinding.ActivityChatRoomBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_chat_room.*
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.coroutines.NonCancellable.cancel
+import kotlin.concurrent.timer
 
 class ChatRoomActivity : AppCompatActivity(){
 
@@ -22,45 +32,63 @@ class ChatRoomActivity : AppCompatActivity(){
     private lateinit var userDb:DatabaseReference
     private lateinit var messageList: ArrayList<Chat>
     private lateinit var binding: ActivityChatRoomBinding
-
     var email: String? = null
-
     var time3: Long = 0
+    var master : String? = null
+
     override fun onBackPressed() {
         val time1 = System.currentTimeMillis()
         val time2 = time1 - time3
+
+        val flag = application as FlagClass
+        val roomNum=flag.getRoomNum()
+        val curEmail=flag.getEmail()
+
+
         if (time2 in 0..2000) {
 
-            val flag = application as FlagClass
-            val roomNum=flag.getRoomNum()
-            //user처리
-            userDb=FirebaseDatabase.getInstance().getReference("Users")
-            userDb.child(email.toString()).child("roomNum").setValue(-1)
-            //room처리
-            roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
-            roomDb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
-                FirebaseDatabase.getInstance().getReference("Rooms").child(roomNum.toString()).child("players")
-                    .setValue(it.value.toString().toInt()-1)
+
+            if(master!=curEmail){
+
+
+                //방장이 아닐 시
+
+                //user처리
+                userDb=FirebaseDatabase.getInstance().getReference("Users")
+                userDb.child(email.toString()).child("roomNum").setValue(-1)
+                //room처리
+                roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
+                roomDb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
+                    FirebaseDatabase.getInstance().getReference("Rooms").child(roomNum.toString()).child("players")
+                        .setValue(it.value.toString().toInt()-1)
+                }
+                //room처리
+                roomDb.child(roomNum.toString()).child("emails").child(email.toString()).removeValue()
+                ///퇴장 메시지
+                chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+
+
+                userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
+                    chatDb.child(roomNum.toString()).child("contents").push().setValue(Chat("${it.value.toString()}님이 퇴장하였습니다",
+                        "관리자",
+                        "관리자",
+                        -1
+                    ))
+                }
+
+
+                val intent = Intent(this, afterLoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+
+                //방장일시
+
+                ActivityCompat.finishAffinity(this)
+                System.exit(0)
             }
-            //room처리
-            roomDb.child(roomNum.toString()).child("emails").child(email.toString()).removeValue()
-            ///퇴장 메시지
-            chatDb=FirebaseDatabase.getInstance().getReference("Chat")
 
 
-            userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
-                chatDb.child(roomNum.toString()).push().setValue(Chat("${it.value.toString()}님이 퇴장하였습니다",
-                    "관리자",
-                    "관리자",
-                    -1
-                ))
-            }
-
-            val intent=Intent(this,afterLoginActivity::class.java)
-            startActivity(intent)
-            finish()
-
-            finish()
         }
         else {
             time3 = time1
@@ -80,11 +108,15 @@ class ChatRoomActivity : AppCompatActivity(){
 
         val flag = application as FlagClass
         val roomNum = flag.getRoomNum()
+        val curEmail = flag.getEmail()
+
         email = flag.getEmail().toString()
 
         roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
-        roomDb.child(roomNum.toString()).child("title").get().addOnSuccessListener {
-            binding.tvRoomTitle.setText(it.value.toString())
+        roomDb.child(roomNum.toString()).get().addOnSuccessListener {
+            binding.tvRoomTitle.setText(it.child("title").value.toString())
+            master=it.child("master").value.toString()
+
         }
 
 
@@ -96,10 +128,34 @@ class ChatRoomActivity : AppCompatActivity(){
 
         chatRecyclerView.layoutManager=LinearLayoutManager(this)
         chatRecyclerView.adapter=messageAdapter
+
+        //나가지는 거 구현
+        chatDb.child(roomNum.toString()).child("onGoing").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.value==false){
+                    Toast.makeText(this@ChatRoomActivity,"방이 종료되었습니다",Toast.LENGTH_SHORT).show()
+                    val userDb=FirebaseDatabase.getInstance().getReference("Users")
+                    val roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
+
+                    userDb.child(email.toString()).child("roomNum").setValue(-1)
+                    roomDb.child(roomNum.toString()).child("players").setValue(0)
+
+                    val intent=Intent(this@ChatRoomActivity,afterLoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        )
 //
 
 
-        chatDb.child(roomNum.toString()).addValueEventListener(object : ValueEventListener {
+        chatDb.child(roomNum.toString()).child("contents").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
 
@@ -108,7 +164,7 @@ class ChatRoomActivity : AppCompatActivity(){
                         val chat = chatSnapshot.getValue(Chat::class.java)
                         messageList.add(chat!!)
                     }
-                chatRecyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1)
+                chatRecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1)
 
                 messageAdapter.notifyDataSetChanged()
             }
@@ -120,37 +176,74 @@ class ChatRoomActivity : AppCompatActivity(){
         )
 
 
-        //
-
-        binding.btnExit.setOnClickListener{
-            //user처리
-            userDb=FirebaseDatabase.getInstance().getReference("Users")
-            userDb.child(email.toString()).child("roomNum").setValue(-1)
-            //room처리
-            roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
-            roomDb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
-                FirebaseDatabase.getInstance().getReference("Rooms").child(roomNum.toString()).child("players")
-                    .setValue(it.value.toString().toInt()-1)
-            }
-            //room처리
-            roomDb.child(roomNum.toString()).child("emails").child(email.toString()).removeValue()
-            ///퇴장 메시지
-            chatDb=FirebaseDatabase.getInstance().getReference("Chat")
-
-
-            userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
-                chatDb.child(roomNum.toString()).push().setValue(Chat("${it.value.toString()}님이 퇴장하였습니다",
-                    "관리자",
-                    "관리자",
-                    -1
-                ))
+        binding.etMessage.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val i=1
             }
 
-            val intent=Intent(this,afterLoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(p0.toString()!=""){
+                    binding.btnSend.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#189AB4"))
+                }else{
+
+                    binding.btnSend.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#868B8E"))
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val i=1
+            }
+
+
         }
 
+        )
+
+
+        //
+/*
+        binding.btnExit.setOnClickListener{
+
+            if(curEmail!=master){
+
+                //user처리
+                userDb=FirebaseDatabase.getInstance().getReference("Users")
+                userDb.child(email.toString()).child("roomNum").setValue(-1)
+                //room처리
+                roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
+                roomDb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
+                    FirebaseDatabase.getInstance().getReference("Rooms").child(roomNum.toString()).child("players")
+                        .setValue(it.value.toString().toInt()-1)
+                }
+                //room처리
+                roomDb.child(roomNum.toString()).child("emails").child(email.toString()).removeValue()
+                ///퇴장 메시지
+                chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+
+
+                userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
+                    chatDb.child(roomNum.toString()).child("contents").push().setValue(Chat("${it.value.toString()}님이 퇴장하였습니다",
+                        "관리자",
+                        "관리자",
+                        -1
+                    ))
+                }
+
+                val intent=Intent(this,afterLoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+
+                //방장일시
+
+                ActivityCompat.finishAffinity(this)
+                System.exit(0)
+            }
+        }*/
+
+
+
+        //
 
 
 
@@ -171,19 +264,56 @@ class ChatRoomActivity : AppCompatActivity(){
 
             if (message.isNotEmpty()) {
 
-                val userDb = FirebaseDatabase.getInstance().getReference("Users")
+                if (email == master && message=="게임시작") {
 
-                userDb.child(email.toString()).get().addOnSuccessListener {
+                    chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+                    var  second : Int=6
 
-                    val userName = it.child("userName").value.toString()
-                    val charNum = it.child("character").value.toString().toInt()
+                    timer(period=1000 , initialDelay = 1000){
 
-                    val chat = Chat(message, userName, email, charNum)
+                        if(second==1)
+                            cancel()
 
-                    chatDb = FirebaseDatabase.getInstance().getReference("Chat")
+                        second--
+                        chatDb.child(roomNum.toString()).child("contents").push().setValue(Chat("게임 시작 전 : ${second}","관리자",
+                        "관리자",-1))
 
-                    chatDb.child(roomNum.toString()).push().setValue(chat)
+                    }
 
+                        chatDb.child(roomNum.toString()).child("contents").push().setValue(Chat("게임을 시작합니다!","관리자",
+                            "관리자",-1))
+
+
+
+
+
+
+                }else if(email == master && message=="게임종료"){
+
+                    chatDb=FirebaseDatabase.getInstance().getReference("Chat")
+
+                    chatDb.child(roomNum.toString()).child("contents").push().setValue(Chat("게임을 종료합니다!","관리자",
+                        "관리자",-1))
+
+                    chatDb.child(roomNum.toString()).child("onGoing").setValue(false)
+
+
+                } else {
+                    val userDb = FirebaseDatabase.getInstance().getReference("Users")
+
+                    userDb.child(email.toString()).get().addOnSuccessListener {
+
+                        val userName = it.child("userName").value.toString()
+                        val charNum = it.child("character").value.toString().toInt()
+
+                        val chat = Chat(message, userName, email, charNum)
+
+                        chatDb = FirebaseDatabase.getInstance().getReference("Chat")
+
+                        chatDb.child(roomNum.toString()).child("contents").push().setValue(chat)
+
+
+                    }
                 }
             }
         }
