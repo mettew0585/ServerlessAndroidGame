@@ -8,6 +8,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,18 +19,19 @@ import com.example.test2.databinding.ActivityAfterLoginBinding
 import com.google.firebase.FirebaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_password.*
 
 
 class afterLoginActivity : AppCompatActivity() {
     private lateinit var db: DatabaseReference
     private lateinit var roomdb: DatabaseReference
     private lateinit var binding: ActivityAfterLoginBinding
-
-
+    var clicked = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_after_login)
+
 
 
         val flag= application as FlagClass
@@ -36,6 +40,15 @@ class afterLoginActivity : AppCompatActivity() {
         db=FirebaseDatabase.getInstance().getReference("Users")
         db.child(email.toString()).child("userName").get().addOnSuccessListener {
             Toast.makeText(this,"'${it.value.toString()}'님 환영합니다!",Toast.LENGTH_SHORT).show()
+
+            val scaleUp : Animation=AnimationUtils.loadAnimation(this,R.anim.scale_up)
+            scaleUp.fillAfter=true
+            scaleUp.isFillEnabled=true
+
+
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag1Btn.startAnimation(scaleUp)
+
         }
 
 
@@ -50,65 +63,86 @@ class afterLoginActivity : AppCompatActivity() {
 
         setFragment(fragment1)
 
-
-
-
-        binding.frag1Btn.setOnClickListener {
+        binding.frag1Btn.setOnClickListener{
             setFragment(fragment1)
+            val scaleUp : Animation=AnimationUtils.loadAnimation(this,R.anim.scale_up)
+            val scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down)
+            scaleUp.fillAfter=true
+            scaleUp.isFillEnabled=true
+            scaleDown.fillAfter=true
+            scaleDown.isFillEnabled=true
 
-            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
-            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
-            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
 
-            binding.frag1Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()
-                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()))
-            binding.frag2Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()
-                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
-            binding.frag3Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt(),
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+
+            if(clicked==2)
+                binding.frag2Btn.startAnimation(scaleDown)
+            else if(clicked==3)
+                binding.frag3Btn.startAnimation(scaleDown)
+
+
+            clicked=1
+            binding.frag1Btn.startAnimation(scaleUp)
 
 
             binding.plusBtn.visibility = View.VISIBLE
         }
+        binding.frag2Btn.setOnClickListener{
+            val scaleUp=AnimationUtils.loadAnimation(this,R.anim.scale_up)
+            val scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down)
+            scaleUp.fillAfter=true
+            scaleUp.isFillEnabled=true
+            scaleDown.fillAfter=true
+            scaleDown.isFillEnabled=true
+
+            "#05445E"
+            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
 
 
-        binding.frag2Btn.setOnClickListener {
-
-            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
-            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
-            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
-
-
-            binding.frag2Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()
-                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()))
-            binding.frag1Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()
-                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
-            binding.frag3Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt(),
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+            if(clicked==1)
+                binding.frag1Btn.startAnimation(scaleDown)
+            else if(clicked==3)
+                binding.frag3Btn.startAnimation(scaleDown)
 
 
+            clicked=2
+            binding.frag2Btn.startAnimation(scaleUp)
 
-            val email = intent.getStringExtra("email")
             binding.plusBtn.visibility = View.INVISIBLE
             setDataAtFragment(fragment2, email.toString())
         }
+        binding.frag3Btn.setOnClickListener{
+            val scaleUp=AnimationUtils.loadAnimation(this,R.anim.scale_up)
+            val scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down)
+            scaleUp.fillAfter=true
+            scaleUp.isFillEnabled=true
+            scaleDown.fillAfter=true
+            scaleDown.isFillEnabled=true
 
-        binding.frag3Btn.setOnClickListener {
-
-            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
-            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
-            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
-
-            binding.frag3Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()
-                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,50F,resources.displayMetrics).toInt()))
-            binding.frag1Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()
-                ,TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
-            binding.frag2Btn.layoutParams=(LinearLayout.LayoutParams(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt(),
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,30F,resources.displayMetrics).toInt()))
+            binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
+            binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
+            binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
 
 
+            if(clicked==1)
+                binding.frag1Btn.startAnimation(scaleDown)
+            else if(clicked==2)
+                binding.frag2Btn.startAnimation(scaleDown)
+
+            clicked=3
+            binding.frag3Btn.startAnimation(scaleUp)
+
+            binding.plusBtn.visibility = View.INVISIBLE
             setFragment(fragment3)
         }
+
+
+
+
 
 
 
@@ -150,5 +184,6 @@ class afterLoginActivity : AppCompatActivity() {
             }
         }
     }
+
 }
 

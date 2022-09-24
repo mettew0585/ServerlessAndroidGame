@@ -37,6 +37,7 @@ class Fragment2 : Fragment() {
         val characterView= view.findViewById<ImageView>(R.id.character)
         val changeBtn=view.findViewById<Button>(R.id.change_btn)
         val tv_coin=view.findViewById<TextView>(R.id.tv_coin)
+        val btnLogout=view.findViewById<Button>(R.id.btn_logout)
 
         val flag = activity?.application as FlagClass
         val email=flag.getEmail()
@@ -66,6 +67,12 @@ class Fragment2 : Fragment() {
             }
         }
 
+        btnLogout.setOnClickListener{
+
+            val intent = Intent(activity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
 
 
 

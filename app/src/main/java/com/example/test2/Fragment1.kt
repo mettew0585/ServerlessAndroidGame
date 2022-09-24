@@ -88,7 +88,7 @@ class Fragment1 : Fragment()  {
                                                 val userDb=FirebaseDatabase.getInstance().getReference("Users")
 
                                                 roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
-                                                roomdb2.child(roomNum.toString()).child("emails").child("email").setValue(email)
+                                                roomdb2.child(roomNum.toString()).child("emails").child((p+1).toString()).setValue(email)
 
                                                 //
                                                 userDb.child(email.toString()).child("userName").get().addOnSuccessListener {

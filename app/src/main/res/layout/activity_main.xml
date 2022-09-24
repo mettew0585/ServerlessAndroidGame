@@ -18,16 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/form"
         android:fontFamily="@font/lilita_one"
         android:text="GAME"
         android:textColor="@color/white"
         android:textSize="100sp" />
 
+
     <LinearLayout
+        android:id="@+id/form"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,15 +49,15 @@
                 android:padding="5sp"
                 android:text="이메일"/>
 
-                <EditText
-                    android:id="@+id/emailText"
-                    android:layout_width="300sp"
-                    android:layout_height="40sp"
-                    android:background="@drawable/chat_input"
-                    android:ems="10"
-                    android:fontFamily="@font/nanum"
-                    android:inputType="textPersonName"
-                    android:padding="10sp" />
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="300sp"
+                android:layout_height="40sp"
+                android:background="@drawable/login"
+                android:ems="10"
+                android:fontFamily="@font/nanum"
+                android:inputType="textPersonName"
+                android:padding="10sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,15 +67,16 @@
                 android:text="비밀번호"
                 android:textColor="@color/white" />
 
-                <EditText
-                    android:id="@+id/passwordText"
-                    android:layout_width="300sp"
-                    android:layout_height="40sp"
+            <EditText
+                android:id="@+id/passwordText"
+                android:layout_width="300sp"
+                android:layout_height="40sp"
+                android:background="@drawable/login"
+                android:fontFamily="@font/nanum"
+                android:inputType="textPassword"
+                android:padding="10sp" />
 
-                    android:background="@drawable/chat_input"
-                    android:fontFamily="@font/nanum"
-                    android:inputType="textPassword"
-                    android:padding="10sp" />
+
 
 
         </LinearLayout>
@@ -106,6 +108,7 @@
                 android:fontFamily="@font/nanum"
                 android:text="회원가입"
                 android:textColor="@color/white" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -23,7 +23,6 @@
             android:layout_marginTop="30sp"
             android:fontFamily="@font/nanum"
             android:gravity="center_horizontal"
-            android:text="안녕하세요"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -162,6 +161,17 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_logout"
+            android:layout_width="250sp"
+            android:layout_marginTop="20sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_design"
+            android:textColor="#FFF"
+            android:fontFamily="@font/nanum"
+            android:text="로그아웃" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

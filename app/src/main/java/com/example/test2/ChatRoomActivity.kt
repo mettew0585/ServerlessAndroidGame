@@ -9,6 +9,8 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -175,6 +177,17 @@ class ChatRoomActivity : AppCompatActivity(){
         }
         )
 
+        /*
+        val rotateCw : Animation = AnimationUtils.loadAnimation(this,R.anim.rotate_cw)
+        val rotateCcw : Animation = AnimationUtils.loadAnimation(this,R.anim.rotate_ccw)
+        rotateCcw.fillAfter=true
+        rotateCcw.isFillEnabled=true
+        rotateCw.fillAfter=true
+        rotateCw.isFillEnabled=true
+        binding.btnSend.startAnimation(rotateCw)
+
+        */
+
 
         binding.etMessage.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -184,9 +197,11 @@ class ChatRoomActivity : AppCompatActivity(){
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if(p0.toString()!=""){
                     binding.btnSend.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#189AB4"))
+                    //binding.btnSend.startAnimation(rotateCcw)
                 }else{
 
                     binding.btnSend.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#868B8E"))
+                    //binding.btnSend.startAnimation(rotateCw)
                 }
             }
 
@@ -200,60 +215,6 @@ class ChatRoomActivity : AppCompatActivity(){
         )
 
 
-        //
-/*
-        binding.btnExit.setOnClickListener{
-
-            if(curEmail!=master){
-
-                //user처리
-                userDb=FirebaseDatabase.getInstance().getReference("Users")
-                userDb.child(email.toString()).child("roomNum").setValue(-1)
-                //room처리
-                roomDb=FirebaseDatabase.getInstance().getReference("Rooms")
-                roomDb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
-                    FirebaseDatabase.getInstance().getReference("Rooms").child(roomNum.toString()).child("players")
-                        .setValue(it.value.toString().toInt()-1)
-                }
-                //room처리
-                roomDb.child(roomNum.toString()).child("emails").child(email.toString()).removeValue()
-                ///퇴장 메시지
-                chatDb=FirebaseDatabase.getInstance().getReference("Chat")
-
-
-                userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
-                    chatDb.child(roomNum.toString()).child("contents").push().setValue(Chat("${it.value.toString()}님이 퇴장하였습니다",
-                        "관리자",
-                        "관리자",
-                        -1
-                    ))
-                }
-
-                val intent=Intent(this,afterLoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }else{
-
-                //방장일시
-
-                ActivityCompat.finishAffinity(this)
-                System.exit(0)
-            }
-        }*/
-
-
-
-        //
-
-
-
-
-
-
-
-
-
-//
 
         binding.btnSend.setOnClickListener {
             val message: String = binding.etMessage.text.toString()

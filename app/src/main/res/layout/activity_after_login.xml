@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/space_bg"
     tools:context=".afterLoginActivity"
 
 
@@ -12,19 +13,22 @@
 
     ]]>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/plus_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/plusbtn_xml"
-        android:backgroundTint="@color/white"
-        android:text="+"
-        android:textColor="@color/black"
-        android:textSize="30sp"
 
-        app:layout_constraintBottom_toTopOf="@id/navbar"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/plus_btn"
+            android:layout_height="50sp"
+            android:layout_width="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/navbar"
+            android:layout_marginBottom="10sp"
+            android:layout_marginRight="10sp"
+            android:background="@drawable/plus"
+            android:backgroundTint="@color/blue_green"
+            android:textSize="30sp" />
+
+
+
+
 
     <FrameLayout
 
@@ -34,10 +38,11 @@
 
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </FrameLayout>
 
@@ -56,26 +61,30 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:orientation="vertical">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/frag1Btn"
-                    android:layout_width="50sp"
-                    android:layout_height="50sp"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
                     android:background="@drawable/home"
-                    android:foreground=""
-                    android:backgroundTint="@color/navy_blue"
+                    android:backgroundTint="@color/blue_green"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
                     android:fontFamily="@font/nanum"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -85,9 +94,9 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="60sp"
+                android:layout_height="60sp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -100,12 +109,17 @@
                     android:layout_width="30sp"
                     android:layout_height="30sp"
                     android:layout_weight="1"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:background="@drawable/person"
-                    android:backgroundTint="@color/blue_green"
+                    android:backgroundTint="@color/navy_blue"
                     android:fontFamily="@font/nanum"
                     android:textColor="#868B8E"
                     android:textSize="10sp" />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,9 +129,9 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="60sp"
+                android:layout_height="60sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,13 +143,17 @@
                     android:layout_width="30sp"
                     android:layout_height="30sp"
                     android:background="@drawable/about"
-                    android:backgroundTint="@color/blue_green"
+                    android:backgroundTint="@color/navy_blue"
                     android:fontFamily="@font/nanum"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:textColor="#868B8E"
                     android:textSize="10sp"
 
                     />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

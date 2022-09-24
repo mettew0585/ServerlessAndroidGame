@@ -43,7 +43,7 @@ class MakeRoom : AppCompatActivity() {
 
                     fdb.getReference("Users").child(email.toString()).child("roomNum").setValue(num)
                     fdb.getReference("Rooms").child(num).setValue(room)
-                    fdb.getReference("Rooms").child(num).child("emails").child(email.toString())
+                    fdb.getReference("Rooms").child(num).child("emails").child("1")
                         .setValue(email.toString())
 
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
