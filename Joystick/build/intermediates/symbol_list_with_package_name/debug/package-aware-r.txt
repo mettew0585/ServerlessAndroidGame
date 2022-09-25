@@ -1,0 +1,7 @@
+com.example.joystick
+attr joystickBaseColor
+attr joystickBaseRatio
+attr joystickStickColor
+attr joystickStickRatio
+attr joystickUseSpring
+styleable Joystick joystickBaseColor joystickBaseRatio joystickStickColor joystickStickRatio joystickUseSpring

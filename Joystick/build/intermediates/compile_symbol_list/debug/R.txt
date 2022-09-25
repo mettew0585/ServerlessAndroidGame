@@ -1,0 +1,11 @@
+int attr joystickBaseColor 0x0
+int attr joystickBaseRatio 0x0
+int attr joystickStickColor 0x0
+int attr joystickStickRatio 0x0
+int attr joystickUseSpring 0x0
+int[] styleable Joystick { 0x0, 0x0, 0x0, 0x0, 0x0 }
+int styleable Joystick_joystickBaseColor 0
+int styleable Joystick_joystickBaseRatio 1
+int styleable Joystick_joystickStickColor 2
+int styleable Joystick_joystickStickRatio 3
+int styleable Joystick_joystickUseSpring 4

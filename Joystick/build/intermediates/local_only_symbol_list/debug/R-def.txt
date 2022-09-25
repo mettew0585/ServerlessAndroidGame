@@ -1,0 +1,8 @@
+R_DEF: Internal format may change without notice
+local
+attr? joystickBaseColor
+attr? joystickBaseRatio
+attr? joystickStickColor
+attr? joystickStickRatio
+attr? joystickUseSpring
+styleable Joystick joystickBaseColor joystickStickColor joystickBaseRatio joystickStickRatio joystickUseSpring
