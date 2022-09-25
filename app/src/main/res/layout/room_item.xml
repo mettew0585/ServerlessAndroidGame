@@ -41,7 +41,7 @@
                     android:id="@+id/tv_roomTitle"
                     android:layout_width="250sp"
                     android:layout_height="30sp"
-                    android:fontFamily="@font/black_han_snas"
+                    android:fontFamily="@font/nanum"
                     android:text="안녕하세요"
                     android:textColor="#FFF"
                     android:textSize="20sp" />

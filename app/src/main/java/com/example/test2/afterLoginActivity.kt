@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -37,13 +38,23 @@ class afterLoginActivity : AppCompatActivity() {
         val flag= application as FlagClass
         val email=flag.getEmail()
 
+        val scaleUp = ScaleAnimation(1f,1.5f,1f,1.5f,
+            Animation.RELATIVE_TO_SELF, 0f, // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 1f)
+        scaleUp.duration=300
+        scaleUp.fillAfter=true
+
+        val scaleDown = ScaleAnimation(1.5f,1f,1.5f,1f,
+            Animation.RELATIVE_TO_SELF, 0f, // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 1f)
+        scaleDown.duration=300
+        scaleDown.fillAfter=true
+
+
         db=FirebaseDatabase.getInstance().getReference("Users")
         db.child(email.toString()).child("userName").get().addOnSuccessListener {
             Toast.makeText(this,"'${it.value.toString()}'님 환영합니다!",Toast.LENGTH_SHORT).show()
 
-            val scaleUp : Animation=AnimationUtils.loadAnimation(this,R.anim.scale_up)
-            scaleUp.fillAfter=true
-            scaleUp.isFillEnabled=true
 
 
             binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
@@ -65,12 +76,6 @@ class afterLoginActivity : AppCompatActivity() {
 
         binding.frag1Btn.setOnClickListener{
             setFragment(fragment1)
-            val scaleUp : Animation=AnimationUtils.loadAnimation(this,R.anim.scale_up)
-            val scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down)
-            scaleUp.fillAfter=true
-            scaleUp.isFillEnabled=true
-            scaleDown.fillAfter=true
-            scaleDown.isFillEnabled=true
 
 
             binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
@@ -90,14 +95,7 @@ class afterLoginActivity : AppCompatActivity() {
             binding.plusBtn.visibility = View.VISIBLE
         }
         binding.frag2Btn.setOnClickListener{
-            val scaleUp=AnimationUtils.loadAnimation(this,R.anim.scale_up)
-            val scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down)
-            scaleUp.fillAfter=true
-            scaleUp.isFillEnabled=true
-            scaleDown.fillAfter=true
-            scaleDown.isFillEnabled=true
 
-            "#05445E"
             binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
             binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
             binding.frag1Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
@@ -116,12 +114,6 @@ class afterLoginActivity : AppCompatActivity() {
             setDataAtFragment(fragment2, email.toString())
         }
         binding.frag3Btn.setOnClickListener{
-            val scaleUp=AnimationUtils.loadAnimation(this,R.anim.scale_up)
-            val scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down)
-            scaleUp.fillAfter=true
-            scaleUp.isFillEnabled=true
-            scaleDown.fillAfter=true
-            scaleDown.isFillEnabled=true
 
             binding.frag3Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#75E6DA"))
             binding.frag2Btn.backgroundTintList= ColorStateList.valueOf(Color.parseColor("#05445E"))
