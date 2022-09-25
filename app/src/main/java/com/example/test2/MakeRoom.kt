@@ -36,15 +36,16 @@ class MakeRoom : AppCompatActivity() {
                 fdb.getReference("roomCount").get().addOnSuccessListener {
                     val num=it.value.toString()
                     val flag=application as FlagClass
-                    val email=flag.getEmail()
+                    val email=flag.getEmail().toString()
                     flag.setRoomNum(num.toInt())
 
                     val room = Room(num.toInt(),1,title,password,email)
+                    val playerInfo = PlayerInfo(false,"-1",-1,-1)
 
                     fdb.getReference("Users").child(email.toString()).child("roomNum").setValue(num)
                     fdb.getReference("Rooms").child(num).setValue(room)
-                    fdb.getReference("Rooms").child(num).child("emails").child("1")
-                        .setValue(email.toString())
+                    fdb.getReference("Rooms").child(num).child("emails").child(email)
+                        .setValue(playerInfo)
 
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
                     //

@@ -78,7 +78,7 @@ class Fragment1 : Fragment()  {
 
                                         if(m_Text==it.value.toString()){
                                             val flag = activity?.application as FlagClass
-                                            val email= flag.getEmail()
+                                            val email= flag.getEmail().toString()
                                             val roomdb1=FirebaseDatabase.getInstance().getReference("Rooms")
 
                                             roomdb1.child(roomNum.toString()).child("players").get().addOnSuccessListener {
@@ -86,9 +86,10 @@ class Fragment1 : Fragment()  {
                                                 val roomdb2=FirebaseDatabase.getInstance().getReference("Rooms")
                                                 val chatDb=FirebaseDatabase.getInstance().getReference("Chat")
                                                 val userDb=FirebaseDatabase.getInstance().getReference("Users")
+                                                val playerInfo = PlayerInfo(false,"-1",-1,-1)
 
                                                 roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
-                                                roomdb2.child(roomNum.toString()).child("emails").child((p+1).toString()).setValue(email)
+                                                roomdb2.child(roomNum.toString()).child("emails").child(email).setValue(playerInfo)
 
                                                 //
                                                 userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
