@@ -13,21 +13,17 @@ import android.widget.*
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.Transformations.map
 import com.example.joystick.JoystickView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_game_screen.*
 import kotlinx.android.synthetic.main.activity_game_screen.view.*
+import kotlinx.android.synthetic.main.activity_signup.*
 import java.util.*
 
 class GameScreen : AppCompatActivity() {
-    /*
-    private val images = arrayOf(
-        R.drawable.character1,
-        R.drawable.character2,
-        R.drawable.character3,
-        R.drawable.character4,
-        R.drawable.character5
-    )
-*/
+
 
     val dx : Array<Int> = arrayOf(-1,0,1,0)
     val dy : Array<Int> =  arrayOf(0,1,0,-1)
@@ -49,16 +45,61 @@ class GameScreen : AppCompatActivity() {
         val screen = findViewById<FrameLayout>(R.id.screen)
         screen.addView(MySurfaceView(this))
 
-
-        val tile1 : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.tile1)
-
-        val k=spToPx(1.0F,this)
-
-
+        val img_myself=findViewById<ImageView>(R.id.img_myself)
+        val img_opponent=findViewById<ImageView>(R.id.img_opponent)
+        img_myself.setImageResource(flag.images[0])
+        img_opponent.setImageResource(flag.images[2])
 
         flag.setY(10)
         flag.setX(10)
         flag.brd[10][10]=1
+
+        val skill1 =findViewById<Button>(R.id.skill1)
+        skill1.setOnClickListener{
+            val cx= flag.getX()?.toInt()
+            val cy= flag.getY()?.toInt()
+
+            for(i in -2..2)
+                for(j in -2..2)
+                {
+                    val nx= cx?.plus(i)
+                    val ny= cy?.plus(j)
+
+                    if(nx!=null && ny!=null){
+                        if(InRange(nx,ny)){
+                            flag.brd[nx][ny]=1
+                        }
+                    }
+                }
+
+        }
+
+/*
+        val gn = "-1"
+        FirebaseDatabase.getInstance().getReference("Games").child(gn).child(flag.getEmail().toString())
+            .child("opponent").get().addOnSuccessListener {
+                val opponent=it.value.toString()
+
+                FirebaseDatabase.getInstance().getReference("Games").child(gn).child(opponent).child("position")
+                    .addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            TODO("Not yet implemented")
+                            val x=snapshot.child("x").value.toString().toInt()
+                            val y=snapshot.child("y").value.toString().toInt()
+
+                            flag.brd[x][y]=2
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+            }
+
+
+         */
+
 
 
 
@@ -78,7 +119,10 @@ class GameScreen : AppCompatActivity() {
                            if(x>0) {
                                x--
                                flag.setX(x)
-                               flag.brd[x][y]=1
+
+                               if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y]=1
+                               }
                            }
                        }
 
@@ -89,10 +133,14 @@ class GameScreen : AppCompatActivity() {
                        var y=flag.getY()
 
                        if (x != null && y!=null) {
+
                            if(y>0 ) {
                                y--
                                flag.setY(y)
-                               flag.brd[x][y]=1
+
+                               if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y] = 1
+                               }
                            }
                        }
 
@@ -103,11 +151,15 @@ class GameScreen : AppCompatActivity() {
                        var x=flag.getX()
 
                        if (y != null&&x!=null) {
+
                            if(x<39) {
                                x++
                                flag.setX(x)
-                               flag.brd[x][y]=1
+                               if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y]=1
+                               }
                            }
+
                        }
 
                    }else if(angle>=315||angle<=405){
@@ -116,18 +168,24 @@ class GameScreen : AppCompatActivity() {
                        var y=flag.getY()
 
                        if (x != null&&y!=null) {
+
+
                            if(y<29) {
                                y++
                                flag.setY(y)
-                               flag.brd[x][y]=1
+
+                               if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y]=1
+                               }
                            }
+
                        }
 
                    }
 
                    BFS()
 
-               }, 50)
+               }, 75)
 
     }
 
@@ -149,11 +207,16 @@ class GameScreen : AppCompatActivity() {
 
         val vis = Array(40,{BooleanArray(30,{false})})
         val flag = application as FlagClass
+        val pnt_myself=findViewById<ProgressBar>(R.id.pnt_myself)
+        var count = 0
 
         for(x in 0..39)
             for(y in 0..29)
             {
-                if(vis[x][y]||flag.brd[x][y]==1)
+                if(flag.brd[x][y]==1)
+                    count++
+
+                if(vis[x][y] || flag.brd[x][y]!=-1)
                     continue
 
                 val l = LinkedList<Pair<Int,Int>>()
@@ -163,10 +226,10 @@ class GameScreen : AppCompatActivity() {
                 l.add(Pair<Int,Int>(x,y))
                 q.add(Pair<Int,Int>(x,y))
                 vis[x][y]=true
-                if(x==0||x==39||y==0||y==29)
-                    b=false
+
 
                 while(!q.isEmpty()){
+
                     val cx=q[0].first
                     val cy=q[0].second
                     q.removeAt(0)
@@ -176,17 +239,22 @@ class GameScreen : AppCompatActivity() {
                         val nx=cx+dx[dir]
                         val ny=cy+dy[dir]
 
-                        if(InRange(nx,ny) && !vis[nx][ny] && flag.brd[nx][ny]==-1){
+                        if(!InRange(nx,ny))
+                            continue
 
-                            if(nx==0||nx==39||ny==0||ny==29){
-                                b=false
-                            }
+                        if(flag.brd[nx][ny]==2||flag.brd[nx][ny]==4)
+                            b = false
+
+                        if(!vis[nx][ny] && flag.brd[nx][ny]==-1){
+
+                            if(nx==0||nx==39||ny==0||ny==29)
+                                b = false
+
 
                             l.add(Pair<Int,Int>(nx,ny))
                             q.add(Pair<Int,Int>(nx,ny))
                             vis[nx][ny]=true
                         }
-
 
                     }
                 }
@@ -195,9 +263,17 @@ class GameScreen : AppCompatActivity() {
                     for( a in l){
                         flag.brd[a.first][a.second]=1
                     }
+                    for(x in 0..39)
+                        for(y in 0..29)
+                            if(flag.brd[x][y]==3)
+                                flag.brd[x][y]=1
                 }
 
             }
+
+        pnt_myself.setProgress(count)
+
+
     }
 
 }

@@ -103,7 +103,7 @@ class ChoiceActivity : AppCompatActivity() {
                         Toast.makeText(this, "현재 사용중인 캐릭터 입니다!", Toast.LENGTH_SHORT).show()
                     } else {
                         val builder = AlertDialog.Builder(this)
-                        builder.setTitle("title").setMessage("현재 캐릭터를 '돌쇠'로 바꾸시겠습니까?")
+                        builder.setMessage("현재 캐릭터를 '돌쇠'로 바꾸시겠습니까?")
                             .setPositiveButton(
                                 "확인",
                                 DialogInterface.OnClickListener { dialog, id ->
@@ -127,7 +127,7 @@ class ChoiceActivity : AppCompatActivity() {
                         Toast.makeText(this, "현재 사용중인 캐릭터 입니다!", Toast.LENGTH_SHORT).show()
                     } else {
                         val builder = AlertDialog.Builder(this)
-                        builder.setTitle("title").setMessage("현재 캐릭터를 '석쇠'로 바꾸시겠습니까?")
+                        builder.setMessage("현재 캐릭터를 '석쇠'로 바꾸시겠습니까?")
                             .setPositiveButton(
                                 "확인",
                                 DialogInterface.OnClickListener { dialog, id ->
@@ -139,7 +139,7 @@ class ChoiceActivity : AppCompatActivity() {
                     }
                 } else {
                     val builder = AlertDialog.Builder(this)
-                    builder.setMessage("title").setMessage("'석쇠'를 구매하시겠습니까").setPositiveButton(
+                    builder.setMessage("'석쇠'를 구매하시겠습니까").setPositiveButton(
                         "확인",
                         DialogInterface.OnClickListener { dialog, id ->
                             userdb.child(email.toString()).child("coin").get()
@@ -174,7 +174,7 @@ class ChoiceActivity : AppCompatActivity() {
                         Toast.makeText(this, "현재 사용중인 캐릭터 입니다!", Toast.LENGTH_SHORT).show()
                     } else {
                         val builder = AlertDialog.Builder(this)
-                        builder.setTitle("title").setMessage("현재 캐릭터를 '영희'로 바꾸시겠습니까?")
+                        builder.setMessage("현재 캐릭터를 '영희'로 바꾸시겠습니까?")
                             .setPositiveButton(
                                 "확인",
                                 DialogInterface.OnClickListener { dialog, id ->
@@ -186,7 +186,7 @@ class ChoiceActivity : AppCompatActivity() {
                     }
                 } else {
                     val builder = AlertDialog.Builder(this)
-                    builder.setMessage("title").setMessage("'영희'를 구매하시겠습니까").setPositiveButton(
+                    builder.setMessage("'영희'를 구매하시겠습니까").setPositiveButton(
                         "확인",
                         DialogInterface.OnClickListener { dialog, id ->
                             userdb.child(email.toString()).child("coin").get()
@@ -220,7 +220,7 @@ class ChoiceActivity : AppCompatActivity() {
                         Toast.makeText(this, "현재 사용중인 캐릭터 입니다!", Toast.LENGTH_SHORT).show()
                     } else {
                         val builder = AlertDialog.Builder(this)
-                        builder.setTitle("title").setMessage("현재 캐릭터를 '암살자'로 바꾸시겠습니까?")
+                        builder.setMessage("현재 캐릭터를 '암살자'로 바꾸시겠습니까?")
                             .setPositiveButton(
                                 "확인",
                                 DialogInterface.OnClickListener { dialog, id ->
@@ -233,7 +233,7 @@ class ChoiceActivity : AppCompatActivity() {
                 } else {
 
                     val builder = AlertDialog.Builder(this)
-                    builder.setMessage("title").setMessage("'암살자'를 구매하시겠습니까").setPositiveButton(
+                    builder.setMessage("'암살자'를 구매하시겠습니까").setPositiveButton(
                         "확인",
                         DialogInterface.OnClickListener { dialog, id ->
                             userdb.child(email.toString()).child("coin").get()
@@ -267,7 +267,7 @@ class ChoiceActivity : AppCompatActivity() {
                         Toast.makeText(this, "현재 사용중인 캐릭터 입니다!", Toast.LENGTH_SHORT).show()
                     } else {
                         val builder = AlertDialog.Builder(this)
-                        builder.setTitle("title").setMessage("현재 캐릭터를 '하쿠미짱'으로 바꾸시겠습니까?")
+                        builder.setMessage("현재 캐릭터를 '하쿠미짱'으로 바꾸시겠습니까?")
                             .setPositiveButton(
                                 "확인",
                                 DialogInterface.OnClickListener { dialog, id ->
@@ -279,7 +279,7 @@ class ChoiceActivity : AppCompatActivity() {
                     }
                 } else {
                     val builder = AlertDialog.Builder(this)
-                    builder.setMessage("title").setMessage("'하쿠미짱'을 구매하시겠습니까").setPositiveButton(
+                    builder.setMessage("'하쿠미짱'을 구매하시겠습니까").setPositiveButton(
                         "확인",
                         DialogInterface.OnClickListener { dialog, id ->
                             userdb.child(email.toString()).child("coin").get()

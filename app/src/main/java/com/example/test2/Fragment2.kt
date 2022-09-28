@@ -21,9 +21,6 @@ import kotlinx.android.synthetic.main.activity_signup.*
 class Fragment2 : Fragment() {
 
     private val exp_level : Array<Int> = arrayOf(1000,2000,3000,4000,5000)
-    private val images = arrayOf(R.drawable.character1,R.drawable.character2
-    ,R.drawable.character3,R.drawable.character4,R.drawable.character5)
-
     private lateinit var database : DatabaseReference
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,8 +51,7 @@ class Fragment2 : Fragment() {
             tv_exp.text="${it.child("exp").value.toString()}   /    ${exp_level[it.child("level").value.toString().toInt()]}"
             tv_coin.text=it.child("coin").value.toString()
             val imgNum=it.child("character").value.toString().toInt()
-            characterView.setImageResource(images[imgNum-1])
-
+            characterView.setImageResource(flag.images[imgNum-1])
         }
 
 

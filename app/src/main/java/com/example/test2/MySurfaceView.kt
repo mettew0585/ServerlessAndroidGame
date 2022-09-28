@@ -18,7 +18,9 @@ class MySurfaceView(context : Context?) :
 
     //private val img : ImageView = R.drawable.character1
     private var surfaceHolder: SurfaceHolder
-    private var paint: Paint
+    private var BluePaint: Paint
+    private var RedPaint : Paint
+    private var BlueGreenPaint : Paint
     private lateinit var thread: Thread
     private var threadRunning = false
     private lateinit var canvas: Canvas
@@ -36,9 +38,17 @@ class MySurfaceView(context : Context?) :
         setZOrderOnTop(true)
 
 
-        paint = Paint()
-        paint.setColor(Color.BLUE)
-        paint.style = Paint.Style.FILL
+        BluePaint = Paint()
+        BluePaint.setColor(Color.parseColor("#05445E"))
+        BluePaint.style = Paint.Style.FILL
+
+        BlueGreenPaint=Paint()
+        BlueGreenPaint.setColor(Color.parseColor("#75E6DA"))
+        BlueGreenPaint.style = Paint.Style.FILL
+
+        RedPaint = Paint()
+        RedPaint.setColor(Color.BLUE)
+        RedPaint.style = Paint.Style.FILL
 
 
         k = context?.let { spToPx(1f, it) }!!
@@ -80,22 +90,34 @@ class MySurfaceView(context : Context?) :
 
     private fun draw() {
 
-        /*
         val flag = context.applicationContext as FlagClass
-        val cx = flag.getX()
-        val cy = flag.getY()
-        val x : Float? = cx?.toFloat()
-        val y : Float? = cy?.toFloat()
+        canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR)
 
-         */
-
-        val flag = context.applicationContext as FlagClass
+        for(x in 0..39)
+            for(y in 0..29)
+            {
+                if(flag.new[x][y]==1){
+                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BlueGreenPaint)
+                }
+            }
 
         for (x in 0..39)
             for (y in 0..29) {
+
                 if (flag.brd[x][y] == 1)
-                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, paint)
+                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BluePaint)
+                if(flag.brd[x][y]==2)
+                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, RedPaint)
             }
+
+
+        val cy = (((flag.getY())?.plus((0.5)))?.times(unit))?.toFloat()
+        val cx = (((flag.getX())?.plus((0.5)))?.times(unit))?.toFloat()
+        val r = (unit*(0.7)).toFloat()
+
+        if (cy != null && cx!=null) {
+            canvas.drawCircle(cy,cx, r ,BlueGreenPaint)
+        }
 
     }
 

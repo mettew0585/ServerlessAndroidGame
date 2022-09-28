@@ -176,6 +176,6 @@
         android:fontFamily="@font/nanum"
         android:text="확인"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

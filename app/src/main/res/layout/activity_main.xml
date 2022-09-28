@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
 
-    <TextView
+    <ImageView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,10 +19,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/form"
+        android:background="@drawable/title"
         android:fontFamily="@font/lilita_one"
-        android:text="GAME"
+        android:text="SPLASH!"
         android:textColor="@color/white"
-        android:textSize="100sp" />
+        android:textSize="80sp" />
 
 
     <LinearLayout

@@ -8,29 +8,46 @@
     android:background="@drawable/space_bg"
     tools:context=".GameScreen">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp">
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/skill1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="10dp"
+                android:background="@drawable/skill_btn"
+                android:backgroundTint="@color/blue_green" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/player"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/black"
+        android:layout_marginTop="10dp"
         >
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             >
 
             <FrameLayout
                 android:id="@+id/screen"
                 android:layout_width="300sp"
                 android:layout_height="400sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/map1"
                 >
 
 
@@ -66,17 +83,19 @@
 
     <com.example.joystick.JoystickView
         android:id="@+id/joystick"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:joystickBaseColor="@color/transparent_white"
+        app:joystickStickColor="@color/blue_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="10dp"
         />
 
 
     <LinearLayout
         android:id="@+id/player"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,55 +104,137 @@
         android:layout_marginTop="10dp"
         android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/img_myself"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <ProgressBar
-                android:id="@+id/pnt_myself"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="300sp"
+            <LinearLayout
+                android:id="@+id/ctn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_weight="1"
-                android:max="1200"
-                android:progress="400" />
+                android:background="@drawable/choicecard"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/img_myself"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/character5" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mypage_card"
+                android:padding="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ctn"
+                android:layout_marginLeft="10dp">
+
+                <ProgressBar
+                    android:id="@+id/pnt_myself"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:max="1200"
+                    android:progress="1200" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/name_myself"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ctn"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="#FFF"
+                android:fontFamily="@font/nanum"
+                android:textStyle="bold"
+                android:text="조현우" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/img_opponent"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <ProgressBar
-                android:id="@+id/pnt_opponent"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="300sp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10sp"
+                android:background="@drawable/mypage_card"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ctn2"
+                android:padding="5dp"
+                android:layout_marginRight="10dp">
+
+                <ProgressBar
+                    android:id="@+id/pnt_opponent"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="200sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:max="1200"
+                    android:progress="200"
+                    android:rotation="180" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/name_opponent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="김민우"
+                android:textStyle="bold"
+                android:fontFamily="@font/nanum"
+                android:textSize="18sp"
+                android:textColor="#FFF"
+                app:layout_constraintEnd_toStartOf="@id/ctn2"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/ctn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_weight="1"
-                android:max="1200"
-                android:progress="400" />
-        </LinearLayout>
+                android:background="@drawable/choicecard"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_opponent"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    tools:srcCompat="@drawable/character2" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 

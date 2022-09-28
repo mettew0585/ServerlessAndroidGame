@@ -31,6 +31,7 @@
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/drawable/screen.xml" value="0.10666666666666667" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/drawable/send_btn.xml" value="0.1835" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/drawable/shape.xml" value="0.168" />
+        <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/drawable/skill_btn.xml" value="0.149" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/drawable/top_bar.xml" value="0.168" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/drawable/unable_use.xml" value="0.1" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/activity_after_login.xml" value="0.22" />
@@ -51,13 +52,13 @@
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/activity_signup.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/activity_splash.xml" value="0.22" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/activity_test.xml" value="0.13405797101449277" />
-        <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/after_login_frag1.xml" value="0.22" />
+        <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/after_login_frag1.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/after_login_frag2.xml" value="0.22" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/after_login_frag3.xml" value="0.13496376811594202" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/chat_item.xml" value="0.22" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/dialog.xml" value="0.22" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/receive.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/room_item.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/room_item.xml" value="0.5" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/sent.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/test.xml" value="0.1" />
         <entry key="..\:/Users/chohyeonwoo/AndroidStudioProjects/test2/app/src/main/res/layout/user_item.xml" value="0.12545289855072464" />

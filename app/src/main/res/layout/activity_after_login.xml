@@ -16,14 +16,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/plus_btn"
-            android:layout_height="50sp"
             android:layout_width="50sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/navbar"
-            android:layout_marginBottom="10sp"
+            android:layout_height="50sp"
             android:layout_marginRight="10sp"
-            android:background="@drawable/plus"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/plus_btn"
             android:backgroundTint="@color/blue_green"
+            app:layout_constraintBottom_toTopOf="@+id/navbar"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="30sp" />
 
 
