@@ -25,7 +25,7 @@ import java.util.*
 class GameScreen : AppCompatActivity() {
 
 
-    val dx : Array<Int> = arrayOf(-1,0,1,0)
+    val dx : Array<Int> =  arrayOf(-1,0,1,0)
     val dy : Array<Int> =  arrayOf(0,1,0,-1)
 
 
@@ -52,7 +52,7 @@ class GameScreen : AppCompatActivity() {
 
         flag.setY(10)
         flag.setX(10)
-        flag.brd[10][10]=1
+        flag.brd[10][10]=3
 
         val skill1 =findViewById<Button>(R.id.skill1)
         skill1.setOnClickListener{
@@ -67,7 +67,7 @@ class GameScreen : AppCompatActivity() {
 
                     if(nx!=null && ny!=null){
                         if(InRange(nx,ny)){
-                            flag.brd[nx][ny]=1
+                            flag.brd[nx][ny]=3
                         }
                     }
                 }
@@ -87,7 +87,7 @@ class GameScreen : AppCompatActivity() {
                             val x=snapshot.child("x").value.toString().toInt()
                             val y=snapshot.child("y").value.toString().toInt()
 
-                            flag.brd[x][y]=2
+                            flag.brd[x][y]=4
                         }
 
                         override fun onCancelled(error: DatabaseError) {
@@ -117,11 +117,15 @@ class GameScreen : AppCompatActivity() {
                        var y= flag.getY()
                        if (y != null && x!=null) {
                            if(x>0) {
+                               val prev = flag.brd[x][y]
                                x--
                                flag.setX(x)
-
-                               if (flag.brd[x][y] != 1) {
-                                   flag.brd[x][y]=1
+                               if(prev == 3 && flag.brd[x][y] == 1){
+                                   fun1(x,y)
+                               }
+                               else if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y] = 3
+                                   BFS1()
                                }
                            }
                        }
@@ -135,11 +139,16 @@ class GameScreen : AppCompatActivity() {
                        if (x != null && y!=null) {
 
                            if(y>0 ) {
+                               val prev = flag.brd[x][y]
                                y--
                                flag.setY(y)
 
-                               if (flag.brd[x][y] != 1) {
-                                   flag.brd[x][y] = 1
+                               if(prev == 3 && flag.brd[x][y] == 1){
+                                   fun1(x,y)
+                               }
+                               else if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y] = 3
+                                   BFS1()
                                }
                            }
                        }
@@ -153,10 +162,15 @@ class GameScreen : AppCompatActivity() {
                        if (y != null&&x!=null) {
 
                            if(x<39) {
+                               val prev = flag.brd[x][y]
                                x++
                                flag.setX(x)
-                               if (flag.brd[x][y] != 1) {
-                                   flag.brd[x][y]=1
+                               if(prev == 3 && flag.brd[x][y] == 1){
+                                   fun1(x,y)
+                               }
+                               else if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y]=3
+                                   BFS1()
                                }
                            }
 
@@ -171,19 +185,22 @@ class GameScreen : AppCompatActivity() {
 
 
                            if(y<29) {
+                               val prev = flag.brd[x][y]
                                y++
                                flag.setY(y)
 
-                               if (flag.brd[x][y] != 1) {
-                                   flag.brd[x][y]=1
+                               if(prev == 3 && flag.brd[x][y] == 1){
+                                   fun1(x,y)
+                               }
+                               else if (flag.brd[x][y] != 1) {
+                                   flag.brd[x][y]=3
+                                   BFS1()
                                }
                            }
 
                        }
 
                    }
-
-                   BFS()
 
                }, 75)
 
@@ -203,12 +220,48 @@ class GameScreen : AppCompatActivity() {
         return (x>=0&&x<40&&y>=0&&y<30)
     }
 
-    fun BFS(){
+    fun fun1(x:Int,y:Int){
+
+
+        val flag = application as FlagClass
+        val l = LinkedList<Pair<Int,Int>>()
+        val q = LinkedList<Pair<Int,Int>>()
+        val vis = Array(40,{BooleanArray(30,{false})})
+
+        l.add(Pair<Int,Int>(x,y))
+        q.add(Pair<Int,Int>(x,y))
+        vis[x][y]=true
+        flag.brd[x][y]=1
+
+        while(!q.isEmpty())
+        {
+            val cx=q[0].first
+            val cy=q[0].second
+            q.removeAt(0)
+
+            for(dir in 0..3){
+                val nx=cx+dx[dir]
+                val ny=cy+dy[dir]
+
+                if(!InRange(nx,ny)||vis[nx][ny]||flag.brd[nx][ny]!=3)
+                    continue
+
+                l.add(Pair<Int,Int>(nx,ny))
+                q.add(Pair<Int,Int>(nx,ny))
+                vis[nx][ny]=true
+                flag.brd[nx][ny]=1
+            }
+        }
+    }
+
+    fun BFS1(){
 
         val vis = Array(40,{BooleanArray(30,{false})})
+        val vis1 = Array(40,{BooleanArray(30,{false})})
         val flag = application as FlagClass
         val pnt_myself=findViewById<ProgressBar>(R.id.pnt_myself)
         var count = 0
+
 
         for(x in 0..39)
             for(y in 0..29)
@@ -219,6 +272,7 @@ class GameScreen : AppCompatActivity() {
                 if(vis[x][y] || flag.brd[x][y]!=-1)
                     continue
 
+
                 val l = LinkedList<Pair<Int,Int>>()
                 val q = LinkedList<Pair<Int,Int>>()
                 var b : Boolean = true
@@ -226,6 +280,9 @@ class GameScreen : AppCompatActivity() {
                 l.add(Pair<Int,Int>(x,y))
                 q.add(Pair<Int,Int>(x,y))
                 vis[x][y]=true
+
+                if(x==0||x==39||y==0||y==29)
+                    b = false
 
 
                 while(!q.isEmpty()){
@@ -261,7 +318,7 @@ class GameScreen : AppCompatActivity() {
 
                 if(b){
                     for( a in l){
-                        flag.brd[a.first][a.second]=1
+                        flag.brd[a.first][a.second]=3
                     }
                     for(x in 0..39)
                         for(y in 0..29)
@@ -272,6 +329,84 @@ class GameScreen : AppCompatActivity() {
             }
 
         pnt_myself.setProgress(count)
+
+
+    }
+    fun BFS2(){
+
+        val vis = Array(40,{BooleanArray(30,{false})})
+        val vis1 = Array(40,{BooleanArray(30,{false})})
+        val flag = application as FlagClass
+        val pnt_opponent=findViewById<ProgressBar>(R.id.pnt_opponent)
+        var count = 0
+
+
+        for(x in 0..39)
+            for(y in 0..29)
+            {
+                if(flag.brd[x][y]==2)
+                    count++
+
+                if(vis[x][y] || flag.brd[x][y]!=-1)
+                    continue
+
+
+                val l = LinkedList<Pair<Int,Int>>()
+                val q = LinkedList<Pair<Int,Int>>()
+                var b : Boolean = true
+
+                l.add(Pair<Int,Int>(x,y))
+                q.add(Pair<Int,Int>(x,y))
+                vis[x][y]=true
+
+                if(x==0||x==39||y==0||y==29)
+                    b = false
+
+
+                while(!q.isEmpty()){
+
+                    val cx=q[0].first
+                    val cy=q[0].second
+                    q.removeAt(0)
+
+
+                    for(dir in 0..3){
+                        val nx=cx+dx[dir]
+                        val ny=cy+dy[dir]
+
+                        if(!InRange(nx,ny))
+                            continue
+
+                        if(flag.brd[nx][ny]==1||flag.brd[nx][ny]==3)
+                            b = false
+
+                        if(!vis[nx][ny] && flag.brd[nx][ny]==-1){
+
+                            if(nx==0||nx==39||ny==0||ny==29)
+                                b = false
+
+
+                            l.add(Pair<Int,Int>(nx,ny))
+                            q.add(Pair<Int,Int>(nx,ny))
+                            vis[nx][ny]=true
+                        }
+
+                    }
+                }
+
+                if(b){
+                    for( a in l){
+                        flag.brd[a.first][a.second]=4
+                    }
+                    for(x in 0..39)
+                        for(y in 0..29)
+                            if(flag.brd[x][y]==4)
+                                flag.brd[x][y]=2
+                }
+
+            }
+
+        pnt_opponent.setProgress(count)
 
 
     }

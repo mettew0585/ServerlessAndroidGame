@@ -60,21 +60,8 @@ class MySurfaceView(context : Context?) :
     override fun surfaceCreated(p0: SurfaceHolder) {
         Toast.makeText(context, "game start", Toast.LENGTH_SHORT).show()
 
-
-/*
-        val background = BitmapFactory.decodeResource(context.resources,R.drawable.character1)
-        val scale = background.height as Float / height.toFloat()
-        val newWidth = Math.round(background.width / scale).toInt()
-        val newHeight = Math.round(background.height / scale).toInt()
-        val scaled = Bitmap.createScaledBitmap(background, newWidth, newHeight, true)
-*/
-
-
-        // Create the child thread when SurfaceView is created.
         thread = Thread(this)
-        // Start to run the child thread.
         thread!!.start()
-        // Set thread running flag to true.
         threadRunning = true
 
     }
@@ -93,20 +80,14 @@ class MySurfaceView(context : Context?) :
         val flag = context.applicationContext as FlagClass
         canvas.drawColor(Color.TRANSPARENT,PorterDuff.Mode.CLEAR)
 
-        for(x in 0..39)
-            for(y in 0..29)
-            {
-                if(flag.new[x][y]==1){
-                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BlueGreenPaint)
-                }
-            }
-
         for (x in 0..39)
             for (y in 0..29) {
 
                 if (flag.brd[x][y] == 1)
                     canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BluePaint)
-                if(flag.brd[x][y]==2)
+                else if (flag.brd[x][y] == 3)
+                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BlueGreenPaint)
+                else if(flag.brd[x][y]==2)
                     canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, RedPaint)
             }
 
