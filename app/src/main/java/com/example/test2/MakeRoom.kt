@@ -32,23 +32,27 @@ class MakeRoom : AppCompatActivity() {
             }else{
 
                 val fdb=FirebaseDatabase.getInstance()
+                val fdb2=FirebaseDatabase.getInstance()
 
                 fdb.getReference("roomCount").get().addOnSuccessListener {
                     val num=it.value.toString()
                     val flag=application as FlagClass
                     val email=flag.getEmail().toString()
                     flag.setRoomNum(num.toInt())
+                    val room = Room(num.toInt(),1,title,password,email,2,false,-1)
+                    val playerInfo = PlayerInfo(email,false,"-1",-1,-1,1)
 
-                    val room = Room(num.toInt(),1,title,password,email)
-                    val playerInfo = PlayerInfo(false,"-1",-1,-1)
-
-                    fdb.getReference("Users").child(email.toString()).child("roomNum").setValue(num)
+                    fdb.getReference("Users").child(email).child("roomNum").setValue(num)
+                    fdb.getReference("Users").child(email).child("userId").setValue(1)
+                    //user데이터베이스 업데이트
                     fdb.getReference("Rooms").child(num).setValue(room)
-                    fdb.getReference("Rooms").child(num).child("emails").child(email)
-                        .setValue(playerInfo)
-
+                    //rooms데이터베이스 업데이트
+                    fdb.getReference("Rooms").child(num).child("emails").child("1").setValue(playerInfo)
+                    //플레이어마다 고유번호 저장
                     fdb.getReference("roomCount").setValue(num.toInt()+1)
-                    //
+                    //룸카운트 늘리기
+
+
                     val chatDb=FirebaseDatabase.getInstance().getReference("Chat")
                     val userDb=FirebaseDatabase.getInstance().getReference("Users")
                     userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
@@ -56,7 +60,6 @@ class MakeRoom : AppCompatActivity() {
                         chatDb.child(num.toString()).child("contents").push().setValue(Chat("방이 열렸습니다! \n방장 :${it.value.toString()}","관리자","관리자",-1))
                         chatDb.child(num.toString()).child("onGoing").setValue(true)
                     }
-                    //
 
 
                     val intent = Intent(this, ChatRoomActivity::class.java)

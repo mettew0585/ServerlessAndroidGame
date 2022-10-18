@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database : DatabaseReference
 
 
-
+//roomnum 이 잇을경우?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

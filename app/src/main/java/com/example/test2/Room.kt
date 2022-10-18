@@ -5,5 +5,8 @@ data class Room(
     val players:Int?=null,
     val title:String?=null,
     val password:String?=null,
-    val master:String?=null
+    val master:String?=null,
+    val sum : Int ? = null,
+    val gameStarted : Boolean? = null,
+    val landNum : Int? = null
 )

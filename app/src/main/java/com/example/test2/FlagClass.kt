@@ -1,14 +1,13 @@
 package com.example.test2
 
-import android.app.Application
-import android.media.Image
-
 class FlagClass : android.app.Application() {
     private var email: String? = null
     private var roomNum : Int? = null
     private var x : Int?= null
     private var y : Int?= null
     private var skill1 : Boolean?=false
+    private var playerNum : Int? =null
+
     var brd= Array<Array<Int>>(40,{Array(30,{-1})})
 
     val images = arrayOf(
@@ -69,5 +68,13 @@ class FlagClass : android.app.Application() {
 
     fun getSkill1(): Boolean? {
        return this.skill1
+    }
+
+    fun getPlayerNum() : Int? {
+        return this.playerNum
+    }
+
+    fun setPlayerNum(num : Int? ){
+        this.playerNum = num
     }
 }

@@ -23,6 +23,7 @@
             android:layout_marginTop="30sp"
             android:fontFamily="@font/nanum"
             android:gravity="center_horizontal"
+            android:text="Loading.."
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -110,7 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nanum"
-                            android:text="LV.1"
+                            android:text="Loading.."
                             android:textColor="@color/white"
                             android:textSize="14sp" />
 
@@ -150,7 +151,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nanum"
                                 android:textColor="@color/white"
-                                android:text="500 / 3000"
+                                android:text="Loading.."
                                 android:gravity="center_horizontal"
                                 android:textSize="12sp"/>
 

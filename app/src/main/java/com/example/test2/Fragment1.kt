@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_signup.*
 
 class Fragment1 : Fragment()  {
 
@@ -46,6 +45,7 @@ class Fragment1 : Fragment()  {
                                 roomLis.add(room!!)
                         }
 
+                        val k=3
                     }
 
                     var adapter=RoomRecyclerAdapter(roomLis)
@@ -70,13 +70,15 @@ class Fragment1 : Fragment()  {
 
                                 roomdb.child(roomNum.toString()).child("players").get().addOnSuccessListener {
                                     val players=it.value.toString().toInt()
+
                                     if(players==0){
                                         Toast.makeText(activity,"존재하지 않는 방입니다!",Toast.LENGTH_SHORT).show()
                                     }else{
 
                                         roomdb.child(roomNum.toString()).child("password").get().addOnSuccessListener {
 
-                                        if(m_Text==it.value.toString()){
+                                        if(m_Text==it.value.toString()){ //패스워드 일치시
+
                                             val flag = activity?.application as FlagClass
                                             val email= flag.getEmail().toString()
                                             val roomdb1=FirebaseDatabase.getInstance().getReference("Rooms")
@@ -84,19 +86,31 @@ class Fragment1 : Fragment()  {
                                             roomdb1.child(roomNum.toString()).child("players").get().addOnSuccessListener {
                                                 val p=it.value.toString().toInt()
                                                 val roomdb2=FirebaseDatabase.getInstance().getReference("Rooms")
+                                                val roomdb3=FirebaseDatabase.getInstance().getReference("Rooms")
                                                 val chatDb=FirebaseDatabase.getInstance().getReference("Chat")
                                                 val userDb=FirebaseDatabase.getInstance().getReference("Users")
-                                                val playerInfo = PlayerInfo(false,"-1",-1,-1)
 
-                                                roomdb2.child(roomNum.toString()).child("players").setValue(p+1)
-                                                roomdb2.child(roomNum.toString()).child("emails").child(email).setValue(playerInfo)
+                                                roomdb2.child(roomNum.toString()).child("sum").get().addOnSuccessListener {
+                                                    val s=it.value.toString().toInt()
+                                                    val playerInfo = PlayerInfo(email,false,"-1",-1,-1,s)
 
-                                                //
-                                                userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
+                                                    userDb.child(email).child("userId").setValue(s)
 
-                                                    chatDb.child(roomNum.toString()).child("contents").push().setValue(
-                                                        Chat("${it.value.toString()}님이 입장하였습니다","관리자","관리자",-1)
-                                                    )
+                                                    //유저 데이터베이스 업데이트
+
+                                                    roomdb3.child(roomNum.toString()).child("players").setValue(p+1)
+                                                    //룸 데이터베이스 플레이어수 업데이트
+                                                    roomdb3.child(roomNum.toString()).child("emails").child(s.toString()).setValue(playerInfo)
+                                                    //
+                                                    roomdb3.child(roomNum.toString()).child("sum").setValue(s+1)
+
+                                                    userDb.child(email.toString()).child("userName").get().addOnSuccessListener {
+
+                                                        chatDb.child(roomNum.toString()).child("contents").push().setValue(
+                                                            Chat("${it.value.toString()}님이 입장하였습니다","관리자","관리자",-1)
+                                                        )
+
+                                                    }
                                                 }
 
                                             }
