@@ -210,7 +210,6 @@ class MapActivity : AppCompatActivity() {
 
             color_change_btn.setOnClickListener {
 
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
 
                 colorType = colorType % 2 + 1
                 if (colorType == 1) {
@@ -225,7 +224,6 @@ class MapActivity : AppCompatActivity() {
             ///
 
             attack_btn_intent.setOnClickListener {
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
 
 
                 if (MapHandling().getLandCount(mapString, userId) == 0) {

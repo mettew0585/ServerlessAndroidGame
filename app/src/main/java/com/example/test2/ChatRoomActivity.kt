@@ -52,7 +52,8 @@ class ChatRoomActivity : AppCompatActivity() {
                 "22/22/22@naver.com##################" +
                 "23/23/23@naver.com##################" +
                 "24/24/24@naver.com##################" +
-                "25/25/25@naver.com##################"
+                "25/25/25@naver.com##################"+"" +
+                "0000000000000000000000000"
 
     override fun onBackPressed() {
         val time1 = System.currentTimeMillis()

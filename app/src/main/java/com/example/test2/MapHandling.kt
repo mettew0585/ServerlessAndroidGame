@@ -37,7 +37,7 @@ class MapHandling {
         val tmpUserIm=(tmpWinIm[0]+"/"+tmpLoseIm[1]+"/"+tmpE).chunked(SPLITLEN)
         var tmpidx=0
         rtn=""
-        while(tmpidx<25) {
+        while(tmpidx<=25) {
             if (tmpidx != tmpLoserIdx)
                 rtn = rtn + tmpUserToken[tmpidx]
             else

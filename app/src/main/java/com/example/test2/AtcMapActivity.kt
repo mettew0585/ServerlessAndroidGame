@@ -20,7 +20,7 @@ class AtcMapActivity : AppCompatActivity() {
 
     val colorArr=arrayOf(R.color.red_color,R.color.green_color,R.color.orange_color)
 
-    var attackMapString:String="1111111111111111111111111"
+    var attackMapString:String="0000000000000000000000000"
     var userId=1
     var mapString:String=""
     var playerNum :Int=1
@@ -91,15 +91,15 @@ class AtcMapActivity : AppCompatActivity() {
         val userDb=FirebaseDatabase.getInstance().getReference("Users")
         val db=FirebaseDatabase.getInstance().getReference("Rooms")
 
-        Toast.makeText(this,flag.getEmail().toString(),Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,flag.getEmail().toString(),Toast.LENGTH_SHORT).show()
 
         val debug=3
 
         userDb.child(flag.getEmail().toString()).child("userId").get().addOnSuccessListener {
 
-            Toast.makeText(this,it.value.toString(),Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,it.value.toString(),Toast.LENGTH_SHORT).show()
             userId = it.value.toString().toInt()
-            Toast.makeText(this,userId.toString(),Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,userId.toString(),Toast.LENGTH_SHORT).show()
 
             val debug=3
 
@@ -107,12 +107,12 @@ class AtcMapActivity : AppCompatActivity() {
             db.child(flag.getRoomNum().toString()).get().addOnSuccessListener {
 
 
-                Toast.makeText(this,"check",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this,"check",Toast.LENGTH_SHORT).show()
 
                 mapString = it.child("mapString").value.toString()
                 playerNum = it.child("players").value.toString().toInt()
                 landNum = it.child("landNum").value.toString().toInt()
-
+                attackMapString=MapHandling().getAttackString(mapString);
                 setMap(imgBtnArr)
                 showAtcMap(mapString, attackMapString, userId, colorType,imgBtnArr)
 
@@ -150,19 +150,26 @@ class AtcMapActivity : AppCompatActivity() {
 
     inner class AttackMapButtonListener : View.OnClickListener{
         override fun onClick(v:View?) {
-            //val intent= Intent(this@AtcMapActivity, GameActivity::class.java)
+            val intent= Intent(this@AtcMapActivity, GameActivity::class.java)
             val bIntent= Intent(this@AtcMapActivity, MapActivity::class.java)
             val dlg = AttackChoiceDialog(this@AtcMapActivity)
             var imgNum:Int
+            val flag = application as FlagClass
+
             imgNum=0
             val db=FirebaseDatabase.getInstance().getReference("Rooms")
             dlg.setOnOKClickedListener {
-                Toast.makeText(this@AtcMapActivity,"공격하였습니다",Toast.LENGTH_SHORT).show()
+                db.child(flag.getRoomNum().toString()).get().addOnSuccessListener {
 
-                db.child("emails").child(userId.toString()).child("opponent").setValue(imgNum)
-                startActivity(intent)
-                overridePendingTransition(0,0)
-                finish()
+                    mapString = it.child("mapString").value.toString()
+                    Toast.makeText(this@AtcMapActivity, "공격하였습니다", Toast.LENGTH_SHORT).show()
+
+                    db.child(flag.getRoomNum().toString()).child("emails").child(userId.toString()).child("opponent").setValue(imgNum)
+                    MapHandling().changeAttackString(mapString,userId,imgNum,1)
+                    startActivity(intent)
+                    overridePendingTransition(0,0)
+                    finish()
+                }
             }//예 클릭시 실행
             when(v?.id){
                 R.id.imgbtn_map1->imgNum=1

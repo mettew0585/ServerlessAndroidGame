@@ -9,6 +9,7 @@
 
 
         <LinearLayout
+
             android:id="@+id/buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,6 +17,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="50dp"
+
             >
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/back_btn_intent"
