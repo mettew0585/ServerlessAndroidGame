@@ -1,14 +1,19 @@
 package com.example.test2
 
 class FlagClass : android.app.Application() {
+
+
     private var email: String? = null
     private var roomNum : Int? = null
     private var x : Int?= null
     private var y : Int?= null
+    private var ox : Int? = null
+    private var oy : Int? = null
     private var skill1 : Boolean?=false
     private var playerNum : Int? =null
 
-    var brd= Array<Array<Int>>(40,{Array(30,{-1})})
+
+    var brd =  Array<Array<Int>>(40,{Array(30,{-1})})
 
     val images = arrayOf(
         R.drawable.character1,
@@ -54,12 +59,29 @@ class FlagClass : android.app.Application() {
         this.x=x
     }
 
+
     fun getY():Int?{
         return y
     }
 
     fun setY(y : Int?){
         this.y=y
+    }
+
+    fun getOx():Int?{
+        return ox
+    }
+
+    fun setOx(x : Int?){
+        this.ox=x
+    }
+
+    fun getOy():Int?{
+        return oy
+    }
+
+    fun setOy(y : Int?){
+        this.oy=y
     }
 
     fun setSkill1(y:Boolean?){

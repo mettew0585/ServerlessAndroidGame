@@ -51,7 +51,7 @@ class AtcMapActivity : AppCompatActivity() {
             }
             for(i in 1..25){
                 imgBtnArr[i].setColorFilter(ContextCompat.getColor(this,colorArr[landColorType[i]]))
-                //imgBtnArr[i].setBackgroundColor(Color.parseColor(colorArr[landColorType[i]]))
+
             }
         }
         if(colorType==2) {
@@ -91,23 +91,15 @@ class AtcMapActivity : AppCompatActivity() {
         val userDb=FirebaseDatabase.getInstance().getReference("Users")
         val db=FirebaseDatabase.getInstance().getReference("Rooms")
 
-        //Toast.makeText(this,flag.getEmail().toString(),Toast.LENGTH_SHORT).show()
-
-        val debug=3
 
         userDb.child(flag.getEmail().toString()).child("userId").get().addOnSuccessListener {
 
-            //Toast.makeText(this,it.value.toString(),Toast.LENGTH_SHORT).show()
             userId = it.value.toString().toInt()
-            //Toast.makeText(this,userId.toString(),Toast.LENGTH_SHORT).show()
 
-            val debug=3
 
 
             db.child(flag.getRoomNum().toString()).get().addOnSuccessListener {
 
-
-                //Toast.makeText(this,"check",Toast.LENGTH_SHORT).show()
 
                 mapString = it.child("mapString").value.toString()
                 playerNum = it.child("players").value.toString().toInt()

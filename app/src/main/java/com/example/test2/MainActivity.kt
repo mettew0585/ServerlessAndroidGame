@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                             }
                             //접속된 방 잇을경우
                             else {
-                                val intent = Intent(this,ChatRoomActivity::class.java)
+                                val intent = Intent(this,GameScreen::class.java)//ChatroomActivity로 바꿔야함
                                 startActivity(intent)
                                 finish()
                             }

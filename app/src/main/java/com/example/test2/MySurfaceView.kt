@@ -1,14 +1,11 @@
 package com.example.test2
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
 import android.util.TypedValue
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_game_screen.view.*
 
 
 class MySurfaceView(context : Context?) :
@@ -21,6 +18,7 @@ class MySurfaceView(context : Context?) :
     private var BluePaint: Paint
     private var RedPaint : Paint
     private var BlueGreenPaint : Paint
+    private var PinkPaint : Paint
     private lateinit var thread: Thread
     private var threadRunning = false
     private lateinit var canvas: Canvas
@@ -47,8 +45,13 @@ class MySurfaceView(context : Context?) :
         BlueGreenPaint.style = Paint.Style.FILL
 
         RedPaint = Paint()
-        RedPaint.setColor(Color.BLUE)
+        RedPaint.setColor(Color.RED)
         RedPaint.style = Paint.Style.FILL
+
+
+        PinkPaint = Paint()
+        PinkPaint.setColor(Color.parseColor("#FFAEBC"))
+        PinkPaint.style = Paint.Style.FILL
 
 
         k = context?.let { spToPx(1f, it) }!!
@@ -87,17 +90,28 @@ class MySurfaceView(context : Context?) :
                     canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BluePaint)
                 else if (flag.brd[x][y] == 3)
                     canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, BlueGreenPaint)
+
+
                 else if(flag.brd[x][y]==2)
                     canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, RedPaint)
+                else if(flag.brd[x][y]==4)
+                    canvas.drawRect(y*unit, x * unit, (y + 1) * unit, (x + 1) * unit, PinkPaint)
             }
 
 
         val cy = (((flag.getY())?.plus((0.5)))?.times(unit))?.toFloat()
         val cx = (((flag.getX())?.plus((0.5)))?.times(unit))?.toFloat()
+        val oy = (((flag.getOy())?.plus((0.5)))?.times(unit))?.toFloat()
+        val ox = (((flag.getOx())?.plus((0.5)))?.times(unit))?.toFloat()
+
         val r = (unit*(0.7)).toFloat()
 
         if (cy != null && cx!=null) {
             canvas.drawCircle(cy,cx, r ,BlueGreenPaint)
+        }
+
+        if (oy != null && ox!=null) {
+            canvas.drawCircle(oy,ox, r ,PinkPaint)
         }
 
     }

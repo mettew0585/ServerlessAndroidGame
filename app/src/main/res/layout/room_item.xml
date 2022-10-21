@@ -21,10 +21,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="10dp"
-            android:layout_width="50sp"
+            android:layout_width="60sp"
             android:layout_height="60sp"
             android:backgroundTint="#05445E"
-            android:background="@drawable/space_craft"/>
+            android:background="@drawable/spl"/>
 
 
         <LinearLayout
@@ -48,9 +48,10 @@
                     android:layout_width="250sp"
                     android:layout_height="30sp"
                     android:fontFamily="@font/nanum"
+                    android:textStyle="bold"
                     android:text="안녕하세요"
                     android:textColor="#FFF"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
 
 
@@ -66,8 +67,8 @@
 
                 <TextView
                     android:id="@+id/tv_players"
-                    android:layout_width="20sp"
-                    android:layout_height="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/nanum"
                     android:textColor="@color/black"
                     android:text="1"
@@ -78,7 +79,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/nanum"
                     android:textColor="@color/black"
-                    android:text="/ 100"
+                    android:text="/25"
                     android:textSize="15sp" />
 
 
