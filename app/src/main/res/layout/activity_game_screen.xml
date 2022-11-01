@@ -156,16 +156,16 @@
                 android:id="@+id/name_myself"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ctn"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:textSize="18sp"
-                android:textColor="#FFF"
+                android:layout_weight="1"
                 android:fontFamily="@font/nanum"
+                android:text="Loading.."
+                android:textColor="#FFF"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="조현우" />
+                app:layout_constraintStart_toEndOf="@id/ctn"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -199,21 +199,19 @@
             </LinearLayout>
 
 
-
             <TextView
                 android:id="@+id/name_opponent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="김민우"
-                android:textStyle="bold"
-                android:fontFamily="@font/nanum"
-                android:textSize="18sp"
-                android:textColor="#FFF"
-                app:layout_constraintEnd_toStartOf="@id/ctn2"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                />
+                android:fontFamily="@font/nanum"
+                android:text="Loading.."
+                android:textColor="#FFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/ctn2"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:id="@+id/ctn2"

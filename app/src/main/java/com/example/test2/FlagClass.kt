@@ -11,9 +11,10 @@ class FlagClass : android.app.Application() {
     private var oy : Int? = null
     private var skill1 : Boolean?=false
     private var playerNum : Int? =null
+    private var userId : Int? = null
 
 
-    var brd =  Array<Array<Int>>(40,{Array(30,{-1})})
+    var brd =  Array<Array<Int>>(40,{Array(30,{5})})
 
     val images = arrayOf(
         R.drawable.character1,
@@ -32,6 +33,14 @@ class FlagClass : android.app.Application() {
         R.drawable.character4,
         R.drawable.character5
         )
+
+    fun getUserId(): Int?{
+        return userId
+    }
+
+    fun setUserId(userId: Int?) {
+        this.userId = userId
+    }
 
 
     fun getEmail(): String? {

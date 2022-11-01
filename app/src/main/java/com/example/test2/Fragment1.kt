@@ -95,7 +95,7 @@ class Fragment1 : Fragment()  {
                                                     val playerInfo = PlayerInfo(email,false,"-1",-1,-1,s)
 
                                                     userDb.child(email).child("userId").setValue(s)
-
+                                                    flag.setUserId(s)
                                                     //유저 데이터베이스 업데이트
 
                                                     roomdb3.child(roomNum.toString()).child("players").setValue(p+1)

@@ -92,6 +92,8 @@ class AtcMapActivity : AppCompatActivity() {
         val db=FirebaseDatabase.getInstance().getReference("Rooms")
 
 
+
+
         userDb.child(flag.getEmail().toString()).child("userId").get().addOnSuccessListener {
 
             userId = it.value.toString().toInt()
