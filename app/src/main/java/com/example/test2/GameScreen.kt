@@ -109,6 +109,7 @@ class GameScreen : AppCompatActivity() {
         val userDB2=FirebaseDatabase.getInstance().getReference("Users")
         val roomDB=FirebaseDatabase.getInstance().getReference("Rooms")
         val roomDB2=FirebaseDatabase.getInstance().getReference("Rooms")
+        val roomDB3=FirebaseDatabase.getInstance().getReference("Rooms")
         val gameDB=FirebaseDatabase.getInstance().getReference("Games")
 
 
@@ -119,9 +120,10 @@ class GameScreen : AppCompatActivity() {
 
 
 
-            roomDB.child(flag.getRoomNum().toString()).child("emails").child(it.child("userId").value.toString()).child("opponent")
+            roomDB.child(flag.getRoomNum().toString()).child("emails").child(it.child("userId").value.toString())
                 .get().addOnSuccessListener {
-                    opp_num= it.value.toString().toInt()
+                    opp_num= it.child("opponent").value.toString().toInt()
+                    val master  = it.child("master").value.toString().toBoolean()
 
                     roomDB2.child(flag.getRoomNum().toString()).child("emails").child(opp_num.toString()).child("email")
                         .get().addOnSuccessListener {
@@ -133,11 +135,13 @@ class GameScreen : AppCompatActivity() {
                         }
 
 
-                    flag.setX(20)
-                    flag.setY(20)
                     //방장이 아닐 때는 그냥 DB에서 받아서 보여주기만 하면됨
 
-                    if(flag.getEmail()=="aa@a"){
+                    if(!master){
+
+
+                        flag.setX(20)
+                        flag.setY(20)
 
                         val key = flag.getRoomNum().toString() + opp_num.toString()+ flag.getUserId().toString()
                         val userDB=FirebaseDatabase.getInstance().getReference("Users")

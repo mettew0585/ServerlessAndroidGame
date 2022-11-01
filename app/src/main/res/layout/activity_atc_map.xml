@@ -13,7 +13,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/user_color"
-        android:layout_width="400sp"
+        android:layout_marginTop="20sp"
+        android:layout_width="300sp"
         android:layout_height="20sp"
         android:orientation="horizontal">
 
