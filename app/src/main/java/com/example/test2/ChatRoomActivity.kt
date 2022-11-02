@@ -139,6 +139,16 @@ class ChatRoomActivity : AppCompatActivity() {
 
         roomDb = FirebaseDatabase.getInstance().getReference("Rooms")
 
+        roomDb.child(roomNum.toString()).get().addOnSuccessListener {
+            if(it.child("gameStarted").value.toString().toBoolean()==true){
+                val intent = Intent(this@ChatRoomActivity, MapActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        /*
+
         roomDb.child(roomNum.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -158,6 +168,8 @@ class ChatRoomActivity : AppCompatActivity() {
             }
 
             )
+
+         */
 
 
         roomDb.child(roomNum.toString()).get().addOnSuccessListener {

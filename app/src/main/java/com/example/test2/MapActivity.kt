@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.myapplication.ATCCheckDialog
 import com.example.myapplication.MapHandling
 import com.example.test2.databinding.ActivityMapBinding
 import com.google.firebase.database.FirebaseDatabase
@@ -122,7 +123,22 @@ class MapActivity : AppCompatActivity() {
         binding = ActivityMapBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val flag = application as FlagClass
+        if(intent.hasExtra("ATCCheckStart")) {
+
+            val intent = Intent(this, MainActivity::class.java)
+            val dlg = ATCCheckDialog(this)
+            dlg.setOnOKClickedListener {
+                Toast.makeText(this, "전투를 진행합니다", Toast.LENGTH_SHORT).show()
+                //on going true로 변경
+                val p1=intent.getIntExtra("player1",0)
+                val p2=intent.getIntExtra("player2",0)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+                finish()
+            }
+            dlg.start("전투를 진행하시겠습니까")
+        }
+            val flag = application as FlagClass
 
         val imgBtnArr = arrayOf(
             binding.imgbtnMap1,
@@ -247,4 +263,6 @@ class MapActivity : AppCompatActivity() {
 
 
     }
+
+
 }
